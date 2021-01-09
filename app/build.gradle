@@ -66,6 +66,7 @@ dependencies {
 
     implementation 'org.springframework.android:spring-android-rest-template:2.0.0.M3'
 
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

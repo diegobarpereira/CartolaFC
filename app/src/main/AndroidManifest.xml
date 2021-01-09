@@ -3,6 +3,10 @@
     package="com.diegopereira.cartolafc">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+
 
     <application
         android:allowBackup="true"
@@ -27,6 +31,7 @@
         <activity android:name=".Teste2Activity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ClassificacaoActivity" />
+        <activity android:name=".LigaAuthActivity" />
     </application>
 
 </manifest>

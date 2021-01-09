@@ -163,6 +163,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.ligaauth) {
+            Intent intent = new Intent(getApplicationContext(), LigaAuthActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

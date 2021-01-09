@@ -18,4 +18,6 @@
         android:id="@+id/classi"/>
     <item android:title="Login"
         android:id="@+id/login"/>
+    <item android:title="Liga Auth"
+        android:id="@+id/ligaauth"/>
 </menu>

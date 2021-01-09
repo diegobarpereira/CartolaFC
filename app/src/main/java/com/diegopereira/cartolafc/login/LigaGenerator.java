@@ -10,7 +10,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ServiceGenerator {
+public class LigaGenerator {
     private static Retrofit retrofit;
     private static Gson gson;
 
@@ -20,7 +20,7 @@ public class ServiceGenerator {
 
         if (retrofit == null){
             retrofit = new Retrofit.Builder()
-                    .baseUrl("https://login.globo.com")
+                    .baseUrl("https://api.cartolafc.globo.com")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
