@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.diegopereira.cartolafc.LeagueActivity;
 import com.diegopereira.cartolafc.LigaActivity;
 import com.diegopereira.cartolafc.R;
 import com.diegopereira.cartolafc.teste.TimePontos;
@@ -27,6 +28,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<com.diegopereira.c
 
     private Context context;
     private List<Ligas> ligas;
+
+    public static final String SHARED_PREF_SLUG = "SHARED";
+    public static final String SLUG_SHARED_PREF = "slug";
 
     public RecyclerViewAdapter( Context context, List<Ligas> ligas) {
         this.context=context;
@@ -58,17 +62,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<com.diegopereira.c
                                                @Override
                                                public void onClick(View v) {
                                                    Toast.makeText(context, ligas.get(position).getSlug().toString(), Toast.LENGTH_SHORT).show();
-                                                   /*
-                                                   SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_ID, MODE_PRIVATE);
+
+                                                   SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_SLUG, MODE_PRIVATE);
                                                    SharedPreferences.Editor editor = preferences.edit();
 
-                                                   editor.putString(ID_SHARED_PREF, teste.get(position).getTimeId().toString());
-                                                   Intent intent = new Intent(context, LigaActivity.class);
+                                                   editor.putString(SLUG_SHARED_PREF, ligas.get(position).getSlug());
+                                                   Intent intent = new Intent(context, LeagueActivity.class);
                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                                    editor.apply();
                                                    context.startActivity(intent);
 
-                                                    */
+
                                                }
                                            }
         );

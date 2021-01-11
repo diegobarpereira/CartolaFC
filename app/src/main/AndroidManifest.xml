@@ -32,6 +32,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".ClassificacaoActivity" />
         <activity android:name=".LigaAuthActivity" />
+        <activity android:name=".LeagueActivity" />
     </application>
 
 </manifest>

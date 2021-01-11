@@ -1,12 +1,9 @@
-package com.diegopereira.cartolafc.login;
-
-import android.text.TextUtils;
+package com.diegopereira.cartolafc.league;
 
 import com.diegopereira.cartolafc.CONSTANTS;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -20,8 +17,7 @@ public class ServiceGenerator {
 
         if (retrofit == null){
             retrofit = new Retrofit.Builder()
-                    //.baseUrl("https://api.cartolafc.globo.com")
-                    .baseUrl("https://login.globo.com")
+                    .baseUrl(CONSTANTS.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
