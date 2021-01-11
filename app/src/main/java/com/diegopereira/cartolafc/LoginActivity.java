@@ -1,6 +1,7 @@
 package com.diegopereira.cartolafc;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +36,9 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText username, password;
     Button auth;
+
+    public static final String SHARED_PREF_NAME = "SHARED";
+    public static final String SHARED_TOKEN = "TOKEN";
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -82,23 +86,13 @@ public class LoginActivity extends AppCompatActivity {
                                 token = glbId.getString("glbId");
                                 System.out.println("TOKEN: " + token);
 
-                                RequestInterface requestInterface = LigaGenerator.getRetrofit().create(RequestInterface.class);
-                                Call<ResponseBody> call2 = requestInterface.getLigas(token);
-                                call2.enqueue(new Callback<ResponseBody>() {
-                                    @Override
-                                    public void onResponse( Call<ResponseBody> call, retrofit2.Response<ResponseBody> response ) {
-                                        try {
-                                            System.out.println(response.body().string());
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
+                                SharedPreferences preferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                                SharedPreferences.Editor editor = preferences.edit();
 
-                                    @Override
-                                    public void onFailure( Call<ResponseBody> call, Throwable t ) {
+                                editor.putString(SHARED_TOKEN, token);
+                                editor.apply();
 
-                                    }
-                                });
+
 
                             } catch (IOException | JSONException e) {
                                 e.printStackTrace();

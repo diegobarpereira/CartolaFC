@@ -10,7 +10,7 @@
 
 
     <ProgressBar
-        android:id="@+id/testeprogressBar"
+        android:id="@+id/ligaprogressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/pullToRefresh8"
+        android:id="@+id/pullToRefresh9"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -37,7 +37,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_marginEnd="5dp"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="2dp"
         android:id="@+id/tv_membros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,6 +46,19 @@
         android:text="Membros"
         android:textAlignment="center"
         android:textSize="14sp"
+        tools:ignore="MissingConstraints,RtlCompat" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_marginEnd="5dp"
+        android:layout_below="@+id/tv_membros"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:text="Times"
+        android:textAlignment="center"
+        android:textSize="10sp"
         tools:ignore="MissingConstraints,RtlCompat" />
 
 </RelativeLayout>
