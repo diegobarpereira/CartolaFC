@@ -3,7 +3,7 @@ package com.diegopereira.cartolafc.ligaauth;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Ligas {
+public class Ligas extends RecyclerViewItem {
     @SerializedName("liga_id")
     @Expose
     private Integer liga_id;
@@ -19,6 +19,10 @@ public class Ligas {
     @SerializedName("total_times_liga")
     @Expose
     private Integer total_times_liga;
+    @SerializedName("time_dono_id")
+    @Expose
+    private String time_dono_id;
+
 
     public Integer getLiga_id() {
         return liga_id;
@@ -52,11 +56,21 @@ public class Ligas {
         this.url_flamula_png = url_flamula_png;
     }
 
+    public String getTime_dono_id() {
+        return time_dono_id;
+    }
+
+    public void setTime_dono_id(String time_dono_id) {
+        this.time_dono_id = time_dono_id;
+    }
+
     public Integer getTotal_times_liga() {
         return total_times_liga;
     }
 
-    public void setTotal_times_liga( Integer total_times_liga ) {
+    public void setTotal_times_liga(Integer total_times_liga ) {
         this.total_times_liga = total_times_liga;
+
+
     }
 }

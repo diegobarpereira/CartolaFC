@@ -39,7 +39,7 @@ public class Times {
     private String facebook_id;
     @SerializedName("patrimonio")
     @Expose
-    private String patrimonio;
+    private Double patrimonio;
     @SerializedName("ranking")
     @Expose
     private Ranking ranking;
@@ -139,11 +139,11 @@ public class Times {
         this.facebook_id = facebook_id;
     }
 
-    public String getPatrimonio() {
+    public Double getPatrimonio() {
         return patrimonio;
     }
 
-    public void setPatrimonio(String patrimonio) {
+    public void setPatrimonio(Double patrimonio) {
         this.patrimonio = patrimonio;
     }
 

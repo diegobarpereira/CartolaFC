@@ -11,16 +11,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.diegopereira.cartolafc.liga.Atleta;
-import com.diegopereira.cartolafc.liga.LigaRecyclerAdapter;
 import com.diegopereira.cartolafc.ligaauth.AuthLiga;
 import com.diegopereira.cartolafc.ligaauth.Ligas;
+import com.diegopereira.cartolafc.ligaauth.MyAdapter;
 import com.diegopereira.cartolafc.ligaauth.RecyclerViewAdapter;
 import com.diegopereira.cartolafc.login.LigaGenerator;
 import com.diegopereira.cartolafc.login.RequestInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -30,16 +31,17 @@ import retrofit2.Response;
 
 import static com.diegopereira.cartolafc.LoginActivity.SHARED_PREF_NAME;
 import static com.diegopereira.cartolafc.LoginActivity.SHARED_TOKEN;
-import static com.diegopereira.cartolafc.teste.RecyclerViewAdapter.ID_SHARED_PREF;
-import static com.diegopereira.cartolafc.teste.RecyclerViewAdapter.SHARED_PREF_ID;
 
 public class LigaAuthActivity extends AppCompatActivity {
     SharedPreferences preferences;
     RecyclerView recyclerView;
-    RecyclerViewAdapter adapter;
+    //RecyclerViewAdapter adapter;
+    MyAdapter adapter;
     List<Ligas> ligas = new ArrayList<>();
+
     String token;
     private ProgressBar loadProgress;
+
 
 
     @Override
@@ -60,12 +62,16 @@ public class LigaAuthActivity extends AppCompatActivity {
         });
 
         loadProgress = (ProgressBar) findViewById(R.id.ligaprogressBar);
+
+
+
         recyclerView = findViewById(R.id.rv_ligaauth);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+
 
         preferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
@@ -97,7 +103,36 @@ public class LigaAuthActivity extends AppCompatActivity {
                             System.out.println(response.body().getLigas());
                             ligas = response.body().getLigas();
 
-                            adapter = new RecyclerViewAdapter(getApplicationContext(), ligas);
+
+
+                            Collections.sort(ligas, new Comparator<Ligas>() {
+                                @Override
+                                public int compare(Ligas o1, Ligas o2) {
+                                    String x1 = null;
+                                    String x2 = null;
+
+                                    if (o1.getTime_dono_id() == null ) {
+                                        x1 = "1";
+                                    } else {
+                                        x1 = o1.getTime_dono_id();
+                                    }
+                                    if (o2.getTime_dono_id() == null) {
+                                        x2 = "1";
+                                    } else {
+                                        x2 = o2.getTime_dono_id();
+                                    }
+
+
+
+                                    System.out.println(x1 + " " + x2);
+                                    return x2.compareTo(x1);
+                                }
+                            });
+
+
+
+
+                            adapter = new MyAdapter(getApplicationContext(), ligas);
                             adapter.notifyDataSetChanged();
                             recyclerView.setAdapter(adapter);
 
@@ -122,4 +157,9 @@ public class LigaAuthActivity extends AppCompatActivity {
             }
         });
     }
-}
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }}

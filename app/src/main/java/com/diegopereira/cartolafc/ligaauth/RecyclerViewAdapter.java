@@ -32,6 +32,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<com.diegopereira.c
     public static final String SHARED_PREF_SLUG = "SHARED";
     public static final String SLUG_SHARED_PREF = "slug";
 
+
+
     public RecyclerViewAdapter( Context context, List<Ligas> ligas) {
         this.context=context;
         this.ligas=ligas;
@@ -47,8 +49,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<com.diegopereira.c
     @Override
     public void onBindViewHolder( com.diegopereira.cartolafc.ligaauth.RecyclerViewAdapter.ViewHolder holder, int position) {
         String liga = ligas.get(position).getNome();
-        String img_liga = ligas.get(position).getUrl_flamula_png();
         holder.tv_liga.setText(liga);
+
+        String img_liga = ligas.get(position).getUrl_flamula_png();
         Picasso.with(context)
                 .load(img_liga)
                 .resize(100, 100)

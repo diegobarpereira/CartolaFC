@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.diegopereira.cartolafc.league.APIInterface;
 import com.diegopereira.cartolafc.league.League;
@@ -18,6 +19,8 @@ import com.diegopereira.cartolafc.league.ServiceGenerator;
 import com.diegopereira.cartolafc.league.Times;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,7 +39,10 @@ public class LeagueActivity extends AppCompatActivity {
     String slug;
     RecyclerView recyclerView;
     List<Times> list = new ArrayList<>();
+
     public static RecyclerViewAdapter adapter;
+
+
     String token;
     private ProgressBar loadProgress;
 
@@ -48,6 +54,8 @@ public class LeagueActivity extends AppCompatActivity {
 
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
+
+
 
         token_preferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         token = token_preferences.getString(SHARED_TOKEN, "");
@@ -65,6 +73,23 @@ public class LeagueActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(manager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
+
+        loadLeague();
+
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefreshLeague);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadLeague(); // your code
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+
+
+
+    }
+
+    private void loadLeague() {
         APIInterface league = ServiceGenerator.getRetrofit().create(APIInterface.class);
         Call<League> call = league.getTime(token, slug);
         call.enqueue(new Callback<League>() {
@@ -72,8 +97,17 @@ public class LeagueActivity extends AppCompatActivity {
             public void onResponse(Call<League> call, Response<League> response) {
                 loadProgress.setVisibility(View.GONE);
 
+
+
                 //System.out.println(response.body().getTimes());
                 list = response.body().getTimes();
+
+                Collections.sort(list, new Comparator<Times>() {
+                    @Override
+                    public int compare(Times o1, Times o2) {
+                        return (o2.getPontos().getCampeonato()).compareTo(o1.getPontos().getCampeonato());
+                    }
+                });
 
                 adapter = new RecyclerViewAdapter(LeagueActivity.this, list);
 
@@ -85,9 +119,12 @@ public class LeagueActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
 }

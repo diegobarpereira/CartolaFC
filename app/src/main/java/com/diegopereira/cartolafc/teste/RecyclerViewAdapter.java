@@ -82,6 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.cash.setText("C$ " + formatter.format(get_cash));
         holder.dif.setText(get_dif);
 
+
         String image = teste.get(position).getUrlEscudoPng();
 
         Picasso.with(context)

@@ -107,9 +107,11 @@ public class LigaActivity extends AppCompatActivity {
 
         loadParciais();
 
-        preferences = getSharedPreferences(SHARED_PREF_ID, MODE_PRIVATE);
+        //preferences = getSharedPreferences(SHARED_PREF_ID, MODE_PRIVATE);
+        preferences = getSharedPreferences("SHARED_PREF_ID", MODE_PRIVATE);
 
-        time_id = preferences.getString(ID_SHARED_PREF, "");
+        //time_id = preferences.getString(ID_SHARED_PREF, "");
+        time_id = preferences.getString("ID_SHARED_PREF", "");
 
         qty = preferences.getString(QTY_SHARED_PREF, String.valueOf("0/0"));
 
