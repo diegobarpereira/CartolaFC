@@ -3,7 +3,7 @@ package com.diegopereira.cartolafc.ligaauth;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Header extends RecyclerViewItem{
+public class Header {
     @SerializedName("header")
     @Expose
     private String header;

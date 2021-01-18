@@ -3,7 +3,10 @@ package com.diegopereira.cartolafc.ligaauth;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Ligas extends RecyclerViewItem {
+public class Ligas {
+    @SerializedName("header")
+    @Expose
+    private String header;
     @SerializedName("liga_id")
     @Expose
     private Integer liga_id;
@@ -23,6 +26,13 @@ public class Ligas extends RecyclerViewItem {
     @Expose
     private String time_dono_id;
 
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader( String header ) {
+        this.header = header;
+    }
 
     public Integer getLiga_id() {
         return liga_id;

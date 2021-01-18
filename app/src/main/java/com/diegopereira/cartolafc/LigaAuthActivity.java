@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.diegopereira.cartolafc.ligaauth.Adapter;
 import com.diegopereira.cartolafc.ligaauth.AuthLiga;
 import com.diegopereira.cartolafc.ligaauth.Ligas;
-import com.diegopereira.cartolafc.ligaauth.MyAdapter;
 import com.diegopereira.cartolafc.ligaauth.RecyclerViewAdapter;
+import com.diegopereira.cartolafc.ligaauth.Section;
 import com.diegopereira.cartolafc.login.LigaGenerator;
 import com.diegopereira.cartolafc.login.RequestInterface;
 
@@ -24,6 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,11 +38,15 @@ public class LigaAuthActivity extends AppCompatActivity {
     SharedPreferences preferences;
     RecyclerView recyclerView;
     //RecyclerViewAdapter adapter;
-    MyAdapter adapter;
+    Adapter adapter;
+
     List<Ligas> ligas = new ArrayList<>();
 
     String token;
     private ProgressBar loadProgress;
+
+    SectionedRecyclerViewAdapter sectionAdapter;
+
 
 
 
@@ -64,6 +70,8 @@ public class LigaAuthActivity extends AppCompatActivity {
         loadProgress = (ProgressBar) findViewById(R.id.ligaprogressBar);
 
 
+        sectionAdapter = new SectionedRecyclerViewAdapter();
+        //sectionAdapter.addSection(new MySection());
 
         recyclerView = findViewById(R.id.rv_ligaauth);
         recyclerView.setHasFixedSize(true);
@@ -103,9 +111,7 @@ public class LigaAuthActivity extends AppCompatActivity {
                             System.out.println(response.body().getLigas());
                             ligas = response.body().getLigas();
 
-
-
-                            Collections.sort(ligas, new Comparator<Ligas>() {
+                                Collections.sort(ligas, new Comparator<Ligas>() {
                                 @Override
                                 public int compare(Ligas o1, Ligas o2) {
                                     String x1 = null;
@@ -131,10 +137,11 @@ public class LigaAuthActivity extends AppCompatActivity {
 
 
 
-
-                            adapter = new MyAdapter(getApplicationContext(), ligas);
+                            //adapter = new RecyclerViewAdapter(getApplicationContext(), ligas);
+                            adapter = new Adapter(getApplicationContext(), ligas);
                             adapter.notifyDataSetChanged();
                             recyclerView.setAdapter(adapter);
+
 
                         }
 
@@ -157,6 +164,7 @@ public class LigaAuthActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
