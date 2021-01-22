@@ -1,21 +1,21 @@
 package com.diegopereira.cartolafc;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.diegopereira.cartolafc.ligaauth.Adapter;
 import com.diegopereira.cartolafc.ligaauth.AuthLiga;
 import com.diegopereira.cartolafc.ligaauth.Ligas;
-import com.diegopereira.cartolafc.ligaauth.RecyclerViewAdapter;
-import com.diegopereira.cartolafc.ligaauth.Section;
+import com.diegopereira.cartolafc.ligaauth.MySection;
 import com.diegopereira.cartolafc.login.LigaGenerator;
 import com.diegopereira.cartolafc.login.RequestInterface;
 
@@ -38,18 +38,27 @@ public class LigaAuthActivity extends AppCompatActivity {
     SharedPreferences preferences;
     RecyclerView recyclerView;
     //RecyclerViewAdapter adapter;
-    Adapter adapter;
+    //Adapter adapter;
 
     List<Ligas> ligas = new ArrayList<>();
+    List<Ligas> list1 = new ArrayList<>();
+    List<Ligas> list2 = new ArrayList<>();
+    //MySection section1 = new MySection(this, "Ligas Privadas", list1);
+    //MySection section2 = new MySection(this, "Ligas Públicas", list2);
 
+
+    boolean sync;
     String token;
     private ProgressBar loadProgress;
 
     SectionedRecyclerViewAdapter sectionAdapter;
 
+    SwipeRefreshLayout pullToRefresh;
 
 
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
@@ -58,13 +67,22 @@ public class LigaAuthActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
 
-        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh9);
+        pullToRefresh = findViewById(R.id.pullToRefresh9);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadLigas(); // your code
-                pullToRefresh.setRefreshing(false);
+
+                if(sync) {
+                    list1.clear();
+                    list2.clear();
+                    loadLigas(); // your code
+
+                    pullToRefresh.setRefreshing(true);
+                } else {
+                    pullToRefresh.setRefreshing(false);
+                }
             }
+
         });
 
         loadProgress = (ProgressBar) findViewById(R.id.ligaprogressBar);
@@ -87,6 +105,7 @@ public class LigaAuthActivity extends AppCompatActivity {
 
         System.out.println("token: " + token);
 
+
         loadLigas();
 
 
@@ -104,12 +123,52 @@ public class LigaAuthActivity extends AppCompatActivity {
                     com.diegopereira.cartolafc.ligaauth.RequestInterface requestInterface1 = ServiceGenerator.getRetrofit().create(com.diegopereira.cartolafc.ligaauth.RequestInterface.class);
                     Call<AuthLiga> call3 = requestInterface1.getLigas(token);
                     call3.enqueue(new Callback<AuthLiga>() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
                         @Override
                         public void onResponse( Call<AuthLiga> call, Response<AuthLiga> response ) {
                             loadProgress.setVisibility(View.GONE);
 
-                            System.out.println(response.body().getLigas());
+
+                            System.out.println("Get Ligas: " + response.body().getLigas().toString());
                             ligas = response.body().getLigas();
+
+
+
+                            if (!containsName(ligas, "null")) {
+
+
+                                for (Ligas entry : ligas) {
+                                    if (entry.getTime_dono_id() != null) {
+                                        if (ligas.isEmpty()) {
+
+                                        } else {
+                                            list1.add(entry);
+
+                                        }
+                                        System.out.println("Teste: " + list1);
+                                    } else {
+                                        list2.add(entry);
+
+                                        System.out.println("Teste 2: " + list2);
+                                    }
+                                }
+
+
+
+
+                            }
+
+                                if (list1.size() > 0) {
+                                    MySection section1 = new MySection(getApplicationContext(), "Ligas Privadas", list1);
+                                    sectionAdapter.addSection(section1);
+                                } else {
+
+                                }
+                                    MySection section2 = new MySection(getApplicationContext(), "Ligas Públicas", list2);
+                                    sectionAdapter.addSection(section2);
+
+
+
 
                                 Collections.sort(ligas, new Comparator<Ligas>() {
                                 @Override
@@ -138,9 +197,13 @@ public class LigaAuthActivity extends AppCompatActivity {
 
 
                             //adapter = new RecyclerViewAdapter(getApplicationContext(), ligas);
-                            adapter = new Adapter(getApplicationContext(), ligas);
-                            adapter.notifyDataSetChanged();
-                            recyclerView.setAdapter(adapter);
+
+
+
+
+                            //adapter = new Adapter(getApplicationContext(), ligas);
+                            //adapter.notifyDataSetChanged();
+                            recyclerView.setAdapter(sectionAdapter);
 
 
                         }
@@ -164,6 +227,14 @@ public class LigaAuthActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public boolean containsName(final List<Ligas> list, final String time_dono_id){
+        return list.stream().anyMatch(o -> o.getTime_dono_id() != null && o.getTime_dono_id().contains(time_dono_id));
+    }
+
 
 
     @Override
