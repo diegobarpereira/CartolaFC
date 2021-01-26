@@ -30,6 +30,7 @@ public class MySection extends StatelessSection {
 
     public static final String SHARED_PREF_SLUG = "SHARED";
     public static final String SLUG_SHARED_PREF = "slug";
+    public static final String NAME_SHARED_PREF = "nome";
 
 
     public MySection(Context context, String title, List<Ligas> list) {
@@ -84,6 +85,7 @@ public class MySection extends StatelessSection {
                                                                    SharedPreferences.Editor editor = preferences.edit();
 
                                                                    editor.putString(SLUG_SHARED_PREF, ligas.getSlug());
+                                                                   editor.putString(NAME_SHARED_PREF, ligas.getNome());
                                                                    Intent intent = new Intent(context, LeagueActivity.class);
                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                                                    editor.apply();
@@ -117,6 +119,7 @@ public class MySection extends StatelessSection {
                                                                    SharedPreferences.Editor editor = preferences.edit();
 
                                                                    editor.putString(SLUG_SHARED_PREF, ligas.getSlug());
+                                                                   editor.putString(NAME_SHARED_PREF, ligas.getNome());
                                                                    Intent intent = new Intent(context, LeagueActivity.class);
                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                                                    editor.apply();

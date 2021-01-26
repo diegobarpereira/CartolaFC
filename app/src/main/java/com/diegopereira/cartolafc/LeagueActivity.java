@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.diegopereira.cartolafc.league.APIInterface;
 import com.diegopereira.cartolafc.league.League;
+import com.diegopereira.cartolafc.league.MySection;
 import com.diegopereira.cartolafc.league.RecyclerViewAdapter;
 import com.diegopereira.cartolafc.league.ServiceGenerator;
 import com.diegopereira.cartolafc.league.Times;
@@ -23,12 +24,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.diegopereira.cartolafc.ligaauth.RecyclerViewAdapter.SHARED_PREF_SLUG;
-import static com.diegopereira.cartolafc.ligaauth.RecyclerViewAdapter.SLUG_SHARED_PREF;
+import static com.diegopereira.cartolafc.ligaauth.MySection.SHARED_PREF_SLUG;
+import static com.diegopereira.cartolafc.ligaauth.MySection.SLUG_SHARED_PREF;
+import static com.diegopereira.cartolafc.ligaauth.MySection.NAME_SHARED_PREF;
+
 
 import static com.diegopereira.cartolafc.LoginActivity.SHARED_PREF_NAME;
 import static com.diegopereira.cartolafc.LoginActivity.SHARED_TOKEN;
@@ -42,7 +46,10 @@ public class LeagueActivity extends AppCompatActivity {
 
     public static RecyclerViewAdapter adapter;
 
+    SectionedRecyclerViewAdapter sectionAdapter;
 
+
+    String nome;
     String token;
     private ProgressBar loadProgress;
 
@@ -55,13 +62,15 @@ public class LeagueActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
 
+        sectionAdapter = new SectionedRecyclerViewAdapter();
+
 
 
         token_preferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         token = token_preferences.getString(SHARED_TOKEN, "");
         preferences = getSharedPreferences(SHARED_PREF_SLUG, MODE_PRIVATE);
         slug = preferences.getString(SLUG_SHARED_PREF, "");
-
+        nome = preferences.getString(NAME_SHARED_PREF, "");
         System.out.println(slug);
         Toast.makeText(getApplicationContext(), slug + " Activity", Toast.LENGTH_SHORT).show();
 
@@ -105,13 +114,16 @@ public class LeagueActivity extends AppCompatActivity {
                 Collections.sort(list, new Comparator<Times>() {
                     @Override
                     public int compare(Times o1, Times o2) {
-                        return (o2.getPontos().getCampeonato()).compareTo(o1.getPontos().getCampeonato());
+                        //return (o2.getPontos().getCampeonato()).compareTo(o1.getPontos().getCampeonato());
+                        return (o1.getRanking().getCampeonato()).compareTo(o2.getRanking().getCampeonato());
                     }
                 });
 
-                adapter = new RecyclerViewAdapter(LeagueActivity.this, list);
+                com.diegopereira.cartolafc.league.MySection section1 = new MySection(getApplicationContext(), nome, list);
+                sectionAdapter.addSection(section1);
+                //adapter = new RecyclerViewAdapter(LeagueActivity.this, list);
 
-                recyclerView.setAdapter(adapter);
+                recyclerView.setAdapter(sectionAdapter);
             }
 
             @Override
