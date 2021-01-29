@@ -58,100 +58,18 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
 
         database = new DatabaseHelper(context);
 
-
-
-        holder.img_bola.setVisibility(View.INVISIBLE);
-        holder.img_chut.setVisibility(View.INVISIBLE);
-
-
         holder.tv_playerparciais.setText(list.get(position).getApelido());
 
 
         //list.get(position).g
 
 
-    database.insert(list.get(position).getRodada(), list.get(position).getApelido(), list.get(position).getPontuacao(), list.get(position).getId(), list.get(position).getScout());
+        database.insert(list.get(position).getRodada(), list.get(position).getApelido(), list.get(position).getPontuacao(), list.get(position).getId(), list.get(position).getScout());
 
         DecimalFormat formatter = new DecimalFormat("##0.00", new DecimalFormatSymbols(Locale.US));
         String get_pontos = formatter.format(list.get(position).getPontuacao());
 
         holder.tv_pontosparciais.setText(String.valueOf(get_pontos));
-
-
-        if (list.get(position).getScout().containsKey("G")) {
-            holder.img_bola.setVisibility(View.VISIBLE);
-            Picasso.with(context)
-                    .load(R.drawable.ic_baseline_sports_soccer_24)
-                    .placeholder(R.drawable.ic_baseline_sports_soccer_24)
-                    .resize(14, 14)
-                    .into(holder.img_bola);
-
-        }
-        if (list.get(position).getScout().containsKey("G=2")) {
-            holder.img_bola.setVisibility(View.VISIBLE);
-            RelativeLayout layout = new RelativeLayout(context);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-            layout.setLayoutParams(params);
-
-            params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-            //params.addRule(RelativeLayout.RIGHT_OF, 1);
-            params.addRule(RelativeLayout.RIGHT_OF, holder.img_bola.getId());
-            //params.addRule(RelativeLayout.ALIGN_TOP, 0);
-            params.addRule(RelativeLayout.END_OF, holder.img_bola.getId());
-
-            ImageView methodImage = new ImageView(context);
-            methodImage.setLayoutParams(params);
-
-            holder.rl.addView(methodImage, params);
-            Picasso.with(context)
-                    .load(R.drawable.ic_baseline_sports_soccer_24)
-                    .placeholder(R.drawable.ic_baseline_sports_soccer_24)
-                    .resize(14, 14)
-                    .into(methodImage);
-
-        }
-
-
-        if (list.get(position).getScout().containsKey("A")) {
-            if (list.get(position).getScout().containsKey("G")) {
-
-
-            RelativeLayout layout = new RelativeLayout(context);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-            layout.setLayoutParams(params);
-
-            params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-            //params.addRule(RelativeLayout.RIGHT_OF, 1);
-            params.addRule(RelativeLayout.RIGHT_OF, holder.img_bola.getId());
-            //params.addRule(RelativeLayout.ALIGN_TOP, 0);
-            params.addRule(RelativeLayout.END_OF, holder.img_bola.getId());
-
-            ImageView methodImage = new ImageView(context);
-            methodImage.setLayoutParams(params);
-
-            holder.rl.addView(methodImage, params);
-
-
-
-            holder.img_chut.setVisibility(View.VISIBLE);
-            Picasso.with(context)
-                    .load(R.drawable.imgchut)
-                    .placeholder(R.drawable.imgchut)
-                    .resize(60, 60)
-                    .into(methodImage);
-            } else {
-                holder.img_chut.setVisibility(View.VISIBLE);
-                Picasso.with(context)
-                        .load(R.drawable.imgchut)
-                        .placeholder(R.drawable.imgchut)
-                        .resize(50, 50)
-                        .into(holder.img_chut);
-            }
-
-        }
-
 
 
         holder.tv_scouts.setText(String.valueOf(list.get(position).getScout()).replace("{", "").replace(",", "").replace("}", "").replace("=", ": "));
@@ -330,8 +248,6 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
             tv_pontosparciais = (AppCompatTextView) itemView.findViewById(R.id.tv_pontosparciais);
             tv_posicaoparciais = (AppCompatTextView) itemView.findViewById(R.id.tv_posicaoparciais);
             img_clube = (AppCompatImageView) itemView.findViewById(R.id.img_clube);
-            img_bola = (AppCompatImageView) itemView.findViewById(R.id.img_bola);
-            img_chut = (AppCompatImageView) itemView.findViewById(R.id.img_chut);
             tv_scouts = (AppCompatTextView) itemView.findViewById(R.id.tv_scouts);
             rl = itemView.findViewById(R.id.rl);
 

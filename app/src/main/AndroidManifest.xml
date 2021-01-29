@@ -33,6 +33,10 @@
         <activity android:name=".ClassificacaoActivity" />
         <activity android:name=".LigaAuthActivity" />
         <activity android:name=".LeagueActivity" />
+        <activity android:name=".JogosActivityBkp" />
+        <service android:name = ".parciais.ServiceParciais"/>
+        <service android:name=".JogosActivityBkp" />
+
     </application>
 
 </manifest>

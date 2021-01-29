@@ -1,16 +1,27 @@
 package com.diegopereira.cartolafc;
 
+import android.app.Service;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ComponentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.diegopereira.cartolafc.parciais.Atletas;
+import com.diegopereira.cartolafc.parciais.ParciaisRecyclerAdapter;
+import com.diegopereira.cartolafc.parciais.ServiceParciais;
 import com.diegopereira.cartolafc.partidas.ApiClient;
 import com.diegopereira.cartolafc.partidas.Example;
 import com.diegopereira.cartolafc.partidas.JogosRecyclerAdapter;
@@ -26,121 +37,65 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JogosActivityBkp extends AppCompatActivity {
-/*
-    RecyclerView recyclerView;
-    List<Partida> list = new ArrayList<>();
-    JogosRecyclerAdapter adapter;
-    private String rodada = MainActivity.rodada_;
+public class JogosActivityBkp extends AppCompatActivity implements ServiceConnection {
 
+    private ServiceParciais s;
+
+    private List<Atletas> atletasList;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.jogos);
+        setContentView(R.layout.parciais);
 
-        assert getSupportActionBar() != null;   //null check
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
+        atletasList = new ArrayList<>();
 
-        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh2);
-        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadJogos(); // your code
-                pullToRefresh.setRefreshing(false);
-            }
-        });
 
-        recyclerView = findViewById(R.id.recyclerview_jogos);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        loadJogos();
-        System.out.println(rodada);
+        //Intent service = new Intent(getApplicationContext(), ServiceParciais.class);
+        //getApplicationContext().startService(service);
 
-    }
+        if (s != null) {
+            System.out.println(s.getList());
+        } else {
+            System.out.println("S:" + s.toString());
+        }
 
-    private void loadJogos() {
-        RequestInterface service = ApiClient.getInterface();
-        Call<Example> call = service.getPartidas();
-
-        call.enqueue(new Callback<Example>() {
-            @Override
-            public void onResponse(Call<Example> call, Response<Example> response) {
-                list = response.body().getPartidas();
-                Collections.sort(list, new Comparator<Partida>() {
-                    @Override
-                    public int compare(Partida o1, Partida o2) {
-                        return o1.getPartidaData().compareTo(o2.getPartidaData());
-                    }
-                });
-
-                adapter = new JogosRecyclerAdapter(JogosActivityBkp.this, list);
-
-                recyclerView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<Example> call, Throwable t) {
-
-            }
-        });
     }
 
     @Override
-    public boolean onSupportNavigateUp(){
-        finish();
-        return true;
+    protected void onResume() {
+        super.onResume();
+        Intent intent = new Intent(this, ServiceParciais.class);
+        bindService(intent, this, Context.BIND_AUTO_CREATE);
     }
 
     @Override
-    public boolean onCreateOptionsMenu( Menu menu){
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void onPause() {
+        super.onPause();
+        unbindService(this);
+    }
+
+
+    @Override
+    public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+        ServiceParciais.MyBinder b = (ServiceParciais.MyBinder) iBinder;
+        s = b.getService();
+        System.out.println("TESTE: " + atletasList.size());
+
+
     }
 
     @Override
-    public boolean onOptionsItemSelected( MenuItem item ) {
-        int id = item.getItemId();
+    public void onServiceDisconnected(ComponentName componentName) {
 
-        if (id == R.id.menu_mais) {
-            Intent intent = new Intent(getApplicationContext(), MaisEscalados.class);
-            startActivity(intent);
-            return true;
-        }
-
-        if (id == R.id.partidas) {
-            Intent intent = new Intent(getApplicationContext(), JogosActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        if (id == R.id.jogadores) {
-            Intent intent = new Intent(getApplicationContext(), JogadoresActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        if (id == R.id.parciais) {
-            Intent intent = new Intent(getApplicationContext(), ParciaisActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        if (id == R.id.liga) {
-            Intent intent = new Intent(getApplicationContext(), Teste2Activity.class);
-            startActivity(intent);
-            return true;
-        }
-
-
-        return super.onOptionsItemSelected(item);
     }
 
- */
+
+
+
 }
+
 
 
 

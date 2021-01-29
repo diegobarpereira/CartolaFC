@@ -34,23 +34,7 @@
         tools:ignore="MissingConstraints"
         android:layout_toRightOf="@id/img_clube" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_toEndOf="@+id/tv_playerparciais"
-        android:id="@+id/img_bola"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
-        android:layout_marginTop="7dp"
-        android:src="@drawable/ic_baseline_sports_soccer_24"
-        android:layout_toRightOf="@+id/tv_playerparciais" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_toEndOf="@+id/tv_playerparciais"
-        android:id="@+id/img_chut"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
-        android:layout_marginTop="7dp"
-        android:src="@drawable/imgchut"
-        android:layout_toRightOf="@+id/tv_playerparciais" />
 
 
     <androidx.appcompat.widget.AppCompatTextView

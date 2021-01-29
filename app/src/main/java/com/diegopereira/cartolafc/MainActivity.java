@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.diegopereira.cartolafc.status.APIInterface;
@@ -22,6 +24,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button button;
+
     private TextView tv_rodada, tv_status, tv_times_escalados, tv_fechamento;
     public static final String SHAREDMAIN_PREF_NAME = "SHAREDMAIN";
     //We will use this to store the boolean in sharedpreference to track user is loggedin or not
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String rodada;
     public static Integer rodada_;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +49,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        button = (Button) findViewById(R.id.buttontest);
+
         tv_rodada = (TextView) findViewById(R.id.tv_rodada);
         tv_status = (TextView) findViewById(R.id.tv_status);
         tv_times_escalados = (TextView) findViewById(R.id.tv_times_escalados);
         tv_fechamento = (TextView) findViewById(R.id.tv_fechamento);
 
         loadstatus();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), JogosActivityBkp.class);
+
+                startActivity(intent);
+            }
+        });
 
     }
 

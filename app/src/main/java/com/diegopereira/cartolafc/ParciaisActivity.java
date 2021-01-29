@@ -57,6 +57,8 @@ public class ParciaisActivity extends AppCompatActivity {
 
     private DatabaseHelper database;
 
+    public static ArrayList<Atletas> list;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +133,9 @@ public class ParciaisActivity extends AppCompatActivity {
 
                             Iterator<String> sIterator = key2.keys();
 
-                            final ArrayList<Atletas> list = new ArrayList<>();
+                            //final ArrayList<Atletas> list = new ArrayList<>();
+                            list = new ArrayList<>();
+
 
                             while (sIterator.hasNext()) {
                                 String atleta_ids = sIterator.next();
