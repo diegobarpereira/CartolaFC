@@ -15,7 +15,7 @@ public interface APIInterface {
    // @Headers("Content-Type: application/json")
 
     //@GET("/b/PSVE")
-    @GET("/atletas/pontuados/32")
+    @GET("/atletas/pontuados/")
     Call<Parciais> getAtletas();
 
 }

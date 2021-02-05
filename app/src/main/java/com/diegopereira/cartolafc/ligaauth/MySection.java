@@ -33,6 +33,7 @@ public class MySection extends StatelessSection {
     public static final String NAME_SHARED_PREF = "nome";
 
 
+
     public MySection(Context context, String title, List<Ligas> list) {
         // call constructor with layout resources for this Section header, footer and items
         super(SectionParameters.builder()

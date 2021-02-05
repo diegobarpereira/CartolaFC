@@ -1,14 +1,10 @@
-package com.diegopereira.cartolafc;
+package com.diegopereira.cartolafc.league;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.Nullable;
-
-import com.diegopereira.cartolafc.teste.TimePontos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +26,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // Database Information
-    static final String DB_NAME = "LIGA.DB";
+    static final String DB_NAME = "LEAGUE.DB";
 
     // database version
-    static final int DB_VERSION = 2;
+    static final int DB_VERSION = 1;
 
     // Creating table query
     private static final String CREATE_TABLE = "create table if not exists " + TABLE_NAME + "(" + _ID
@@ -85,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<TimePontos> getTimes() {
         List<TimePontos> array_list = new ArrayList<>();
 
-        String sql = "SELECT * FROM " + TABLE_NAME+" ORDER BY cast(total AS REAL) ASC";
+        String sql = "SELECT * FROM " + TABLE_NAME+" ORDER BY CAST(parciais AS REAL) ASC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -105,6 +101,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             db.close();
             return array_list;
+    }
+
+    public void orderTable() {
+        String sql = "SELECT * FROM " + TABLE_NAME+" ORDER BY CAST(total AS REAL) ASC";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        db.close();
     }
 
     public Cursor fetch() {

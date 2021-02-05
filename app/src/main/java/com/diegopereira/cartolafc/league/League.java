@@ -10,11 +10,23 @@ public class League {
     @Expose
     private List<Times> times = null;
 
+    @SerializedName("atletas")
+    @Expose
+    private List<Atleta> atletas;
+
     public List<Times> getTimes() {
         return times;
     }
 
     public void setTimes(List<Times> times) {
         this.times = times;
+    }
+
+    public List<Atleta> getAtletas() {
+        return atletas;
+    }
+
+    public void setAtletas(List<Atleta> atletas) {
+        this.atletas = atletas;
     }
 }

@@ -229,6 +229,8 @@ public class RecyclerRodadaAdapter extends RecyclerView.Adapter<RecyclerRodadaAd
         id = item.get(position).getTimeId();
 
 
+
+
         Integer finalId = id;
         String finalQty = item.get(position).getQty();
         Double finalParc = item.get(position).getParciais();

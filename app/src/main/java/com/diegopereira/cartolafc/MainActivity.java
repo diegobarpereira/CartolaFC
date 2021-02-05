@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button = (Button) findViewById(R.id.buttontest);
 
         tv_rodada = (TextView) findViewById(R.id.tv_rodada);
         tv_status = (TextView) findViewById(R.id.tv_status);
@@ -58,14 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadstatus();
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), JogosActivityBkp.class);
 
-                startActivity(intent);
-            }
-        });
 
     }
 

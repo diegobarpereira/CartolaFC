@@ -14,7 +14,10 @@ public interface APIInterface {
 
     @GET("/auth/liga/{slug}")
 
+
     Call<League> getTime(@Header("X-GLB-TOKEN") String token, @Path("slug") String slug);
+
+
 
 
 

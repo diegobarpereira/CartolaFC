@@ -3,6 +3,8 @@ package com.diegopereira.cartolafc.league;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Times {
     @SerializedName("url_escudo_png")
     @Expose
@@ -49,7 +51,17 @@ public class Times {
     @SerializedName("variacao")
     @Expose
     private Variacao variacao;
+    @SerializedName("atletas")
+    @Expose
+    private List<Atleta> atletas;
 
+    public List<Atleta> getAtletas() {
+        return atletas;
+    }
+
+    public void setAtletas(List<Atleta> atletas) {
+        this.atletas = atletas;
+    }
 
     public String getUrl_escudo_png() {
         return url_escudo_png;

@@ -1,5 +1,6 @@
 package com.diegopereira.cartolafc.league;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.diegopereira.cartolafc.LeagueActivity;
@@ -16,18 +18,27 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
 import static android.content.Context.MODE_PRIVATE;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
-public class MySection extends StatelessSection {
+public class MySection extends Section {
     String title;
     List<Times> list;
     Context context;
+    public static boolean isClicked;
+    int i = 0;
+
 
     public MySection( Context context, String title, List<Times> list) {
         // call constructor with layout resources for this Section header, footer and items
@@ -78,7 +89,7 @@ public class MySection extends StatelessSection {
         String name = list.get(position).getNome();
         itemViewHolder.name.setText(name);
 
-        System.out.println(list.get(position).getRanking().getCampeonato());
+        //System.out.println(list.get(position).getRanking().getCampeonato());
         Integer posicao = list.get(position).getRanking().getCampeonato();
         String pos = String.valueOf(posicao);
         itemViewHolder.pos.setText(pos);
@@ -91,7 +102,7 @@ public class MySection extends StatelessSection {
         if (var > 0) {
             String variacao = String.valueOf(var);
             itemViewHolder.var.setText("+" + variacao);
-            itemViewHolder.var.setTextColor(Color.GREEN);
+            itemViewHolder.var.setTextColor(Color.parseColor("#006400"));
         }
         if (var < 0 ) {
             String variacao = String.valueOf(var);
@@ -118,6 +129,8 @@ public class MySection extends StatelessSection {
                 .resize(70, 70)
                 .into(itemViewHolder.img_player);
 
+
+
         itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                                                @Override
                                                public void onClick(View v) {
@@ -134,15 +147,43 @@ public class MySection extends StatelessSection {
                                            }
         );
 
+
+
     }
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
         MyHeaderViewHolder headerHolder = (MyHeaderViewHolder) holder;
 
-        // bind your header view here
-
         headerHolder.league_name.setText(title);
+
+
+        headerHolder.league_total.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (i == 0) {
+                    Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+                    isClicked = TRUE;
+
+                    LeagueActivity.sortASC();
+                    i++;
+                }
+                else if (i == 1) {
+                    Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+                    LeagueActivity.sortDESC();
+                    isClicked = FALSE;
+
+                    i = 0;
+                }
+
+            }
+        });
+
+
+
+System.out.println("I: " + i);
+
+
     }
 
     @Override
@@ -150,6 +191,8 @@ public class MySection extends StatelessSection {
         // return an empty instance of ViewHolder for the headers of this section
         return new MyHeaderViewHolder(view);
     }
+
+
 
 
 
