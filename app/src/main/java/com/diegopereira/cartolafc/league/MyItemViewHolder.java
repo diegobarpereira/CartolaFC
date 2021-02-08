@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.diegopereira.cartolafc.R;
 
-class MyItemViewHolder extends RecyclerView.ViewHolder {
+ class MyItemViewHolder extends RecyclerView.ViewHolder {
     public final TextView name, pos, points, dif, var, ultima, cash;
     public final AppCompatImageView img_player;
 

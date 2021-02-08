@@ -9,11 +9,13 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.diegopereira.cartolafc.LeagueActivity;
 import com.diegopereira.cartolafc.R;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -24,6 +26,9 @@ import java.util.Map;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 public class MyParcialSection extends StatelessSection {
     String title;
     List<Times> list;
@@ -32,7 +37,9 @@ public class MyParcialSection extends StatelessSection {
     Map<String, Double> mapparciais;
     Map<String, Double> mapliga;
     private DatabaseHelper database;
-
+    public static boolean isClicked;
+    public static boolean ultimaisClicked;
+    int i = 0, j = 0, k = 0;
 
 
 
@@ -141,34 +148,21 @@ public class MyParcialSection extends StatelessSection {
 
         }
 
-
         List<TimePontos> item = database.getTimes();
-        System.out.println(item.toString());
+        
+            Glide.with(context)
+                    .load(item.get(position).getUrlEscudoPng())
+                    .into(itemViewHolder.img_player);
 
+            itemViewHolder.name.setText(item.get(position).getNome());
+            itemViewHolder.ultima.setText(formatter.format(item.get(position).getParciais()));
+            itemViewHolder.points.setText(formatter.format(item.get(position).getPontosrod()));
 
+            itemViewHolder.cash.setText(item.get(position).getQty());
 
-        Glide.with(context)
-                .load(item.get(position).getUrlEscudoPng())
-                .into(itemViewHolder.img_player);
-
-
-        itemViewHolder.name.setText(item.get(position).getNome());
-        itemViewHolder.ultima.setText(formatter.format(item.get(position).getParciais()));
-        itemViewHolder.points.setText(formatter.format(item.get(position).getPontosrod()));
-
-        itemViewHolder.cash.setText(item.get(position).getQty());
-
-        itemViewHolder.pos.setText(String.valueOf(position + 1));
-        itemViewHolder.var.setVisibility(View.GONE);
-        itemViewHolder.dif.setVisibility(View.GONE);
-
-        //String image = item.get(position).getUrlEscudoPng();
-
-        //Picasso.with(context)
-        //        .load(item.get(position).getUrlEscudoPng())
-        //        .into(itemViewHolder.img_player);
-
-
+            itemViewHolder.pos.setText(String.valueOf(position + 1));
+            itemViewHolder.var.setVisibility(View.GONE);
+            itemViewHolder.dif.setVisibility(View.GONE);
 
 
     }
@@ -179,11 +173,46 @@ public class MyParcialSection extends StatelessSection {
         headerHolder.league_name.setText(title);
         headerHolder.league_ultima.setText("Parciais");
 
-        headerHolder.league_ultima.setOnClickListener(new View.OnClickListener() {
+        headerHolder.league_total.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, String.valueOf(headerHolder.league_ultima.getText()), Toast.LENGTH_SHORT).show();
+                if (i == 0) {
+                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+                    isClicked = TRUE;
 
+                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
+
+                    i++;
+                }
+                else if (i == 1) {
+                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+                    isClicked = FALSE;
+
+                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
+
+                    i = 0;
+                }
+
+            }
+        });
+
+        headerHolder.league_ultima.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick( View v ) {
+                if (j == 0) {
+                    Toast.makeText(context, String.valueOf(j), Toast.LENGTH_SHORT).show();
+                    ultimaisClicked = TRUE;
+
+                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
+                    j++;
+                }
+                else if (j == 1) {
+                    Toast.makeText(context, String.valueOf(j), Toast.LENGTH_SHORT).show();
+
+                    ultimaisClicked = FALSE;
+                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
+                    j = 0;
+                }
             }
         });
 
@@ -194,5 +223,6 @@ public class MyParcialSection extends StatelessSection {
         // return an empty instance of ViewHolder for the headers of this section
         return new MyHeaderViewHolder(view);
     }
+
 
 }

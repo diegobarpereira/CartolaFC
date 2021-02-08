@@ -81,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<TimePontos> getTimes() {
         List<TimePontos> array_list = new ArrayList<>();
 
-        String sql = "SELECT * FROM " + TABLE_NAME+" ORDER BY CAST(parciais AS REAL) ASC";
+        String sql = "SELECT * FROM " + TABLE_NAME+" ORDER BY CAST(total AS REAL) ASC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -103,11 +103,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return array_list;
     }
 
-    public void orderTable() {
-        String sql = "SELECT * FROM " + TABLE_NAME+" ORDER BY CAST(total AS REAL) ASC";
+    public List<TimePontos> getDESCTimes() {
+        List<TimePontos> array_list = new ArrayList<>();
+
+        String sql = "SELECT * FROM " + TABLE_NAME+" ORDER BY CAST(parciais AS REAL) DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                TimePontos timePontos = new TimePontos();
+                timePontos.setNome(cursor.getString(1));
+                timePontos.setParciais(cursor.getDouble(2));
+                timePontos.setPontosrod(cursor.getDouble(3));
+                timePontos.setUrlEscudoPng(cursor.getString(4));
+                timePontos.setQty(cursor.getString(5));
+                timePontos.setTimeId(cursor.getInt(6));
+
+                array_list.add(0, timePontos);
+            } while (cursor.moveToNext());
+        }
+
         db.close();
+        return array_list;
+    }
+
+    public List<TimePontos> getASCTimes() {
+        List<TimePontos> array_list = new ArrayList<>();
+
+        String sql = "SELECT * FROM " + TABLE_NAME+" ORDER BY CAST(parciais AS REAL) ASC";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                TimePontos timePontos = new TimePontos();
+                timePontos.setNome(cursor.getString(1));
+                timePontos.setParciais(cursor.getDouble(2));
+                timePontos.setPontosrod(cursor.getDouble(3));
+                timePontos.setUrlEscudoPng(cursor.getString(4));
+                timePontos.setQty(cursor.getString(5));
+                timePontos.setTimeId(cursor.getInt(6));
+
+                array_list.add(0, timePontos);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+        return array_list;
     }
 
     public Cursor fetch() {

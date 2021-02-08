@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.ColorInt;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.diegopereira.cartolafc.LeagueActivity;
 import com.diegopereira.cartolafc.LigaActivity;
 import com.diegopereira.cartolafc.R;
@@ -37,7 +38,8 @@ public class MySection extends Section {
     List<Times> list;
     Context context;
     public static boolean isClicked;
-    int i = 0;
+    public static boolean ultimaisClicked;
+    int i = 0, j = 0;
 
 
     public MySection( Context context, String title, List<Times> list) {
@@ -124,17 +126,25 @@ public class MySection extends Section {
         itemViewHolder.cash.setText("$" + dinheiro);
 
         String symbol = list.get(position).getUrl_escudo_png();
-        Picasso.with(context)
+        Glide.with(context)
                 .load(symbol)
-                .resize(70, 70)
                 .into(itemViewHolder.img_player);
 
+        if (isClicked || ultimaisClicked) {
+            itemViewHolder.dif.setVisibility(View.INVISIBLE);
+
+        }
+        for (int k = 0; k < list.size(); k++) {
+            if (ultimaisClicked) {
+                itemViewHolder.pos.setText(position + 1);
+            }
+        }
 
 
         itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                                                @Override
                                                public void onClick(View v) {
-                                                   Toast.makeText(context, list.get(position).getTime_id().toString(), Toast.LENGTH_SHORT).show();
+                                                   //Toast.makeText(context, list.get(position).getTime_id().toString(), Toast.LENGTH_SHORT).show();
                                                    SharedPreferences preferences = context.getSharedPreferences("SHARED_PREF_ID", MODE_PRIVATE);
                                                    SharedPreferences.Editor editor = preferences.edit();
 
@@ -162,15 +172,16 @@ public class MySection extends Section {
             @Override
             public void onClick(View view) {
                 if (i == 0) {
-                    Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
                     isClicked = TRUE;
 
-                    LeagueActivity.sortASC();
+                    LeagueActivity.sortTotalASC();
+
                     i++;
                 }
                 else if (i == 1) {
-                    Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
-                    LeagueActivity.sortDESC();
+                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+                    LeagueActivity.sortTotalDESC();
                     isClicked = FALSE;
 
                     i = 0;
@@ -179,10 +190,27 @@ public class MySection extends Section {
             }
         });
 
+        headerHolder.league_ultima.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (j == 0) {
+                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+                    ultimaisClicked = TRUE;
 
+                    LeagueActivity.sortUltimaASC();
 
-System.out.println("I: " + i);
+                    j++;
+                }
+                else if (j == 1) {
+                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+                    LeagueActivity.sortUltimaDESC();
+                    ultimaisClicked = FALSE;
 
+                    j = 0;
+                }
+
+            }
+        });
 
     }
 

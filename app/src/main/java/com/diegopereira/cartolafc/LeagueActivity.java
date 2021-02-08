@@ -30,6 +30,7 @@ import com.diegopereira.cartolafc.league.RequestInterface;
 import com.diegopereira.cartolafc.league.ServiceGenerator;
 import com.diegopereira.cartolafc.league.TimePontos;
 import com.diegopereira.cartolafc.league.Times;
+import com.diegopereira.cartolafc.liga.Time;
 import com.diegopereira.cartolafc.parciais.Parciais;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -73,9 +74,9 @@ public class LeagueActivity extends AppCompatActivity {
     public static List<Times> list = new ArrayList<>();
 
     Map<String, Double> mapparciais = new HashMap<>(); //
-    ArrayList<TimePontos> teste = new ArrayList<>();
+    public static ArrayList<TimePontos> teste = new ArrayList<>();
 
-    SectionedRecyclerViewAdapter sectionAdapter;
+    public static SectionedRecyclerViewAdapter sectionAdapter;
 
     private DatabaseHelper database;
 
@@ -140,9 +141,12 @@ public class LeagueActivity extends AppCompatActivity {
             recyclerView.setAdapter(sectionAdapter);
             database = new DatabaseHelper(getApplicationContext());
             getApplicationContext().deleteDatabase(database.getDatabaseName());
+
             for (int j = 0; j < 28; j++) {
                 database.insert("nome", 0.0, 0.0, "", "", 0);
             }
+
+
             loadParciais();
         }
 
@@ -178,18 +182,7 @@ public class LeagueActivity extends AppCompatActivity {
                 //System.out.println(response.body().getTimes());
                 list = response.body().getTimes();
 
-                /*
-                Collections.sort(list, new Comparator<Times>() {
-                    @Override
-                    public int compare(Times o1, Times o2) {
-                        return (o1.getRanking().getCampeonato()).compareTo(o2.getRanking().getCampeonato());
-                    }
-                });
-
-                 */
-
-
-
+                sortTotalDESC();
 
                 com.diegopereira.cartolafc.league.MySection section1 = new MySection(getApplicationContext() ,  nome, list);
                 sectionAdapter.addSection(section1);
@@ -306,7 +299,6 @@ public class LeagueActivity extends AppCompatActivity {
 
 
 
-
                                             sectionAdapter.notifyDataSetChanged();
 
                                         } catch (Exception e) {
@@ -351,7 +343,7 @@ public class LeagueActivity extends AppCompatActivity {
 
         }
 
-        public static void sortASC() {
+        public static void sortTotalASC() {
 
                 Collections.sort(list, new Comparator<Times>() {
                     @Override
@@ -359,10 +351,11 @@ public class LeagueActivity extends AppCompatActivity {
                         return (o2.getRanking().getCampeonato()).compareTo(o1.getRanking().getCampeonato());
                     }
                 });
+            sectionAdapter.notifyDataSetChanged();
 
         }
 
-        public static void sortDESC() {
+        public static void sortTotalDESC() {
 
                     Collections.sort(list, new Comparator<Times>() {
                         @Override
@@ -370,12 +363,41 @@ public class LeagueActivity extends AppCompatActivity {
                             return (o1.getRanking().getCampeonato()).compareTo(o2.getRanking().getCampeonato());
                         }
                     });
+            sectionAdapter.notifyDataSetChanged();
 
         }
 
+    public static void sortUltimaASC() {
+
+        Collections.sort(list, new Comparator<Times>() {
+            @Override
+            public int compare(Times o1, Times o2) {
+                return (o2.getPontos().getRodada()).compareTo(o1.getPontos().getRodada());
+            }
+        });
+        sectionAdapter.notifyDataSetChanged();
+
+    }
+
+    public static void sortUltimaDESC() {
+
+        Collections.sort(list, new Comparator<Times>() {
+            @Override
+            public int compare(Times o1, Times o2) {
+                return (o1.getPontos().getRodada()).compareTo(o2.getPontos().getRodada());
+            }
+        });
+        sectionAdapter.notifyDataSetChanged();
+
+    }
 
 
-        @Override
+
+
+
+
+
+    @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
