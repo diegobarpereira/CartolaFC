@@ -34,6 +34,8 @@
         <activity android:name=".LigaAuthActivity" />
         <activity android:name=".LeagueActivity" />
         <activity android:name=".JogosActivityBkp" />
+        <activity android:name=".GroupActivity" />
+        <activity android:name=".FavoritosActivity" />
 
         <service android:name=".JogosActivityBkp" />
 

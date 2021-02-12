@@ -1,6 +1,8 @@
 package com.diegopereira.cartolafc.league;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.View;
 import android.widget.Toast;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.diegopereira.cartolafc.LeagueActivity;
+import com.diegopereira.cartolafc.LigaActivity;
 import com.diegopereira.cartolafc.R;
 import com.squareup.picasso.Picasso;
 
@@ -26,6 +29,7 @@ import java.util.Map;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
+import static android.content.Context.MODE_PRIVATE;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
@@ -40,6 +44,13 @@ public class MyParcialSection extends StatelessSection {
     public static boolean isClicked;
     public static boolean ultimaisClicked;
     int i = 0, j = 0, k = 0;
+
+    public static final String SHARED_PREF_ID = "SHARED";
+    public static final String ID_SHARED_PREF = "id";
+
+    public static final String SHARED_PREF_NAME = "SHARED";
+    public static final String TOTAL_SHARED_PREF = "total";
+    public static final String QTY_SHARED_PREF = "qty";
 
 
 
@@ -83,12 +94,15 @@ public class MyParcialSection extends StatelessSection {
         Integer get_cap = teste.get(position).getCapitaoId();
 
 
+
+
         Integer jogador_id = 0;
         mapliga = new HashMap<>();
         for (int i = 0; i < 12; i++) {
             jogador_id = teste.get(position).getAtletas().get(i).getAtletaId();
 
             mapliga.put(String.valueOf(jogador_id), 0.0);
+
 
         }
 
@@ -143,12 +157,17 @@ public class MyParcialSection extends StatelessSection {
             teste.get(i).setPontosrod(pontototal);
             teste.get(i).setQty(qty);
 
+
+
+
+
                 database.update(position+1, teste.get(position).getNome(), teste.get(position).getParciais(), teste.get(position).getPontosrod(),
                         teste.get(position).getUrlEscudoPng(), teste.get(position).getQty(), teste.get(position).getTimeId());
 
         }
 
-        List<TimePontos> item = database.getTimes();
+        /*
+            List<TimePontos> item = database.getTimes();
         
             Glide.with(context)
                     .load(item.get(position).getUrlEscudoPng())
@@ -163,6 +182,182 @@ public class MyParcialSection extends StatelessSection {
             itemViewHolder.pos.setText(String.valueOf(position + 1));
             itemViewHolder.var.setVisibility(View.GONE);
             itemViewHolder.dif.setVisibility(View.GONE);
+
+            System.out.println("LEN: " + (item.size() - 1));
+
+         */
+            List<TimePontos> item = database.getTimes();
+
+            if ( k == 0 ) {
+                //item = database.getTimes();
+
+                Glide.with(context)
+                        .load(item.get(position).getUrlEscudoPng())
+                        .into(itemViewHolder.img_player);
+
+                itemViewHolder.name.setText(item.get(position).getNome());
+                itemViewHolder.ultima.setText(formatter.format(item.get(position).getParciais()));
+                itemViewHolder.points.setText(formatter.format(item.get(position).getPontosrod()));
+
+                itemViewHolder.cash.setText(item.get(position).getQty());
+
+                itemViewHolder.pos.setText(String.valueOf(position + 1));
+                itemViewHolder.var.setVisibility(View.GONE);
+                itemViewHolder.dif.setVisibility(View.GONE);
+
+                id = item.get(position).getTimeId();
+
+                Integer finalId = id;
+                String finalQty = item.get(position).getQty();
+                Double finalParc = item.get(position).getParciais();
+                itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                                                       @Override
+                                                       public void onClick( View v ) {
+                                                           Toast.makeText(context, String.valueOf(finalId), Toast.LENGTH_SHORT).show();
+                                                           SharedPreferences preferences = context.getSharedPreferences("SHARED_PREF_ID", MODE_PRIVATE);
+                                                           SharedPreferences.Editor editor = preferences.edit();
+
+                                                           editor.putString("ID_SHARED_PREF", String.valueOf(finalId));
+                                                           editor.putString(QTY_SHARED_PREF, finalQty);
+                                                           editor.putString(TOTAL_SHARED_PREF, String.valueOf(finalParc));
+
+
+                                                           Intent intent = new Intent(context, LigaActivity.class);
+                                                           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                           editor.apply();
+                                                           context.startActivity(intent);
+                                                       }
+                                                   }
+                );
+
+            }
+
+            if ( k == 3) {
+                item = database.getDESCTotalTimes();
+                Glide.with(context)
+                        .load(item.get(position).getUrlEscudoPng())
+                        .into(itemViewHolder.img_player);
+
+                itemViewHolder.name.setText(item.get(position).getNome());
+                itemViewHolder.ultima.setText(formatter.format(item.get(position).getParciais()));
+                itemViewHolder.points.setText(formatter.format(item.get(position).getPontosrod()));
+
+                itemViewHolder.cash.setText(item.get(position).getQty());
+
+                itemViewHolder.pos.setText(String.valueOf(position + 1));
+                itemViewHolder.var.setVisibility(View.GONE);
+                itemViewHolder.dif.setVisibility(View.GONE);
+
+                id = item.get(position).getTimeId();
+
+                Integer finalId = id;
+                String finalQty = item.get(position).getQty();
+                Double finalParc = item.get(position).getParciais();
+                itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                                                       @Override
+                                                       public void onClick( View v ) {
+                                                           Toast.makeText(context, String.valueOf(finalId), Toast.LENGTH_SHORT).show();
+                                                           SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_ID, MODE_PRIVATE);
+                                                           SharedPreferences.Editor editor = preferences.edit();
+
+                                                           editor.putString(ID_SHARED_PREF, String.valueOf(finalId));
+                                                           editor.putString(QTY_SHARED_PREF, finalQty);
+                                                           editor.putString(TOTAL_SHARED_PREF, String.valueOf(finalParc));
+
+
+                                                           Intent intent = new Intent(context, LigaActivity.class);
+                                                           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                           editor.apply();
+                                                           context.startActivity(intent);
+                                                       }
+                                                   }
+                );
+            }
+
+            if ( k == 1 ) {
+                item = database.getASCTimes();
+                Glide.with(context)
+                        .load(item.get(position).getUrlEscudoPng())
+                        .into(itemViewHolder.img_player);
+
+                itemViewHolder.name.setText(item.get(position).getNome());
+                itemViewHolder.ultima.setText(formatter.format(item.get(position).getParciais()));
+                itemViewHolder.points.setText(formatter.format(item.get(position).getPontosrod()));
+
+                itemViewHolder.cash.setText(item.get(position).getQty());
+
+                itemViewHolder.pos.setText(String.valueOf(position + 1));
+                itemViewHolder.var.setVisibility(View.GONE);
+                itemViewHolder.dif.setVisibility(View.GONE);
+
+                id = item.get(position).getTimeId();
+
+                Integer finalId = id;
+                String finalQty = item.get(position).getQty();
+                Double finalParc = item.get(position).getParciais();
+                itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                                                       @Override
+                                                       public void onClick( View v ) {
+                                                           Toast.makeText(context, String.valueOf(finalId), Toast.LENGTH_SHORT).show();
+                                                           SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_ID, MODE_PRIVATE);
+                                                           SharedPreferences.Editor editor = preferences.edit();
+
+                                                           editor.putString(ID_SHARED_PREF, String.valueOf(finalId));
+                                                           editor.putString(QTY_SHARED_PREF, finalQty);
+                                                           editor.putString(TOTAL_SHARED_PREF, String.valueOf(finalParc));
+
+
+                                                           Intent intent = new Intent(context, LigaActivity.class);
+                                                           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                           editor.apply();
+                                                           context.startActivity(intent);
+                                                       }
+                                                   }
+                );
+
+            } else if ( k == 2 ) {
+                item = database.getDESCTimes();
+                Glide.with(context)
+                        .load(item.get(position).getUrlEscudoPng())
+                        .into(itemViewHolder.img_player);
+
+                itemViewHolder.name.setText(item.get(position).getNome());
+                itemViewHolder.ultima.setText(formatter.format(item.get(position).getParciais()));
+                itemViewHolder.points.setText(formatter.format(item.get(position).getPontosrod()));
+
+                itemViewHolder.cash.setText(item.get(position).getQty());
+
+                itemViewHolder.pos.setText(String.valueOf(position + 1));
+                itemViewHolder.var.setVisibility(View.GONE);
+                itemViewHolder.dif.setVisibility(View.GONE);
+
+                id = item.get(position).getTimeId();
+
+                Integer finalId = id;
+                String finalQty = item.get(position).getQty();
+                Double finalParc = item.get(position).getParciais();
+                itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                                                       @Override
+                                                       public void onClick( View v ) {
+                                                           Toast.makeText(context, String.valueOf(finalId), Toast.LENGTH_SHORT).show();
+                                                           SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_ID, MODE_PRIVATE);
+                                                           SharedPreferences.Editor editor = preferences.edit();
+
+                                                           editor.putString(ID_SHARED_PREF, String.valueOf(finalId));
+                                                           editor.putString(QTY_SHARED_PREF, finalQty);
+                                                           editor.putString(TOTAL_SHARED_PREF, String.valueOf(finalParc));
+
+
+                                                           Intent intent = new Intent(context, LigaActivity.class);
+                                                           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                           editor.apply();
+                                                           context.startActivity(intent);
+                                                       }
+                                                   }
+                );
+            }
+
+
 
 
     }
@@ -183,6 +378,8 @@ public class MyParcialSection extends StatelessSection {
                     LeagueActivity.sectionAdapter.notifyDataSetChanged();
 
                     i++;
+                    k = 3;
+
                 }
                 else if (i == 1) {
                     //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
@@ -191,6 +388,7 @@ public class MyParcialSection extends StatelessSection {
                     LeagueActivity.sectionAdapter.notifyDataSetChanged();
 
                     i = 0;
+                    k = 0;
                 }
 
             }
@@ -205,6 +403,7 @@ public class MyParcialSection extends StatelessSection {
 
                     LeagueActivity.sectionAdapter.notifyDataSetChanged();
                     j++;
+                    k = 1;
                 }
                 else if (j == 1) {
                     Toast.makeText(context, String.valueOf(j), Toast.LENGTH_SHORT).show();
@@ -212,6 +411,7 @@ public class MyParcialSection extends StatelessSection {
                     ultimaisClicked = FALSE;
                     LeagueActivity.sectionAdapter.notifyDataSetChanged();
                     j = 0;
+                    k = 2;
                 }
             }
         });

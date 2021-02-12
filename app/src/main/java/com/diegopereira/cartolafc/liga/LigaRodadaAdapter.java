@@ -47,6 +47,7 @@ public class LigaRodadaAdapter extends RecyclerView.Adapter<LigaRodadaAdapter.Vi
     private List<Teste> tmpList;
     private Map<String, Double> mapparciais;
     private Map<String, Double> mapliga;
+    private Map<String, Integer> map;
     private Integer capitao, idgol, idlat, idzag, idmei, idata, idtec;
     private String stat;
 
@@ -76,6 +77,7 @@ public class LigaRodadaAdapter extends RecyclerView.Adapter<LigaRodadaAdapter.Vi
         this.tmpList = tmpList;
         this.mapparciais = mapparciais;
         this.mapliga = mapliga;
+        this.map = map;
     }
 
     @NonNull
@@ -272,15 +274,18 @@ public class LigaRodadaAdapter extends RecyclerView.Adapter<LigaRodadaAdapter.Vi
                     System.out.println(hashmap.getKey() + " - " + hashmap.getValue());
                     mapparciais.put(hashmap.getKey(), hashmap.getValue());
 
+
                     teste.put(hashmap.getKey(), hashmap.getValue());
 
                     System.out.println("TESTE: " + teste);
                     System.out.println("SIZE: " + teste.size() + "/" + mapliga.size());
 
+
                     double total = 0.0;
                     String ttotal = "";
                     for (String k : teste.keySet()) {
                         System.out.println(k + "\t" + teste.get(k));
+
                         DecimalFormat formatter = new DecimalFormat("##0.00", new DecimalFormatSymbols(Locale.US));
 
                         total += teste.get(k);
@@ -297,11 +302,15 @@ public class LigaRodadaAdapter extends RecyclerView.Adapter<LigaRodadaAdapter.Vi
                     editor.apply();
                 }
 
+
+
                 DecimalFormat formatter = new DecimalFormat("##0.00", new DecimalFormatSymbols(Locale.US));
 
                 if (hashmap.getKey().contains(String.valueOf(atletaId))) {
                     holder.tv_pontos.setText(String.valueOf(formatter.format(hashmap.getValue())));
+
                 }
+
 
                 if (atletaId.equals(capitao)) {
 
@@ -335,7 +344,7 @@ public class LigaRodadaAdapter extends RecyclerView.Adapter<LigaRodadaAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private AppCompatImageView img_clube, img_cap;
-        private AppCompatTextView tv_jogador, tv_posicao, tv_pontos, atletaId, capitaoId, tv_timename;
+        private AppCompatTextView tv_jogador, tv_posicao, tv_pontos, atletaId, capitaoId, tv_timename, tv_scouts;
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -345,6 +354,7 @@ public class LigaRodadaAdapter extends RecyclerView.Adapter<LigaRodadaAdapter.Vi
             tv_posicao = (AppCompatTextView) itemView.findViewById(R.id.tv_posicao);
             tv_pontos = (AppCompatTextView) itemView.findViewById(R.id.tv_pontos);
             atletaId = (AppCompatTextView) itemView.findViewById(R.id.atletaId);
+            tv_scouts = (AppCompatTextView) itemView.findViewById(R.id.tv_scouts);
 
             tv_timename = (AppCompatTextView) itemView.findViewById(R.id.tv_timename);
 

@@ -176,6 +176,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.groups) {
+            Intent intent = new Intent(getApplicationContext(), FavoritosActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

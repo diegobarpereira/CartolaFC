@@ -24,6 +24,7 @@ import com.diegopereira.cartolafc.liga.Atleta;
 import com.diegopereira.cartolafc.liga.LigaRecyclerAdapter;
 import com.diegopereira.cartolafc.liga.LigaRodadaAdapter;
 import com.diegopereira.cartolafc.liga.Players;
+import com.diegopereira.cartolafc.liga.Scout;
 import com.diegopereira.cartolafc.liga.ServiceGenerator;
 import com.diegopereira.cartolafc.liga.Teste;
 import com.diegopereira.cartolafc.parciais.Parciais;
@@ -31,6 +32,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,8 +56,11 @@ import static com.diegopereira.cartolafc.MainActivity.MAIN_SHARED_PREF;
 import static com.diegopereira.cartolafc.MainActivity.SHAREDMAIN_PREF_NAME;
 import static com.diegopereira.cartolafc.teste.RecyclerViewAdapter.ID_SHARED_PREF;
 import static com.diegopereira.cartolafc.teste.RecyclerViewAdapter.SHARED_PREF_ID;
-import static com.diegopereira.cartolafc.teste.RecyclerRodadaAdapter.TOTAL_SHARED_PREF;
-import static com.diegopereira.cartolafc.teste.RecyclerRodadaAdapter.QTY_SHARED_PREF;
+//import static com.diegopereira.cartolafc.teste.RecyclerRodadaAdapter.TOTAL_SHARED_PREF;
+//import static com.diegopereira.cartolafc.teste.RecyclerRodadaAdapter.QTY_SHARED_PREF;
+
+import static com.diegopereira.cartolafc.league.MyParcialSection.TOTAL_SHARED_PREF;
+import static com.diegopereira.cartolafc.league.MyParcialSection.QTY_SHARED_PREF;
 
 
 public class LigaActivity extends AppCompatActivity {
@@ -269,6 +274,8 @@ public class LigaActivity extends AppCompatActivity {
                         // edited here ,add toJson
                         String jsonResponse = new Gson().toJson(response.body());
                         JSONObject jsonObject = null;
+                        Map<String, Integer> map = null;
+
                         if (jsonResponse != null) {
                             try {
                                 jsonObject = new JSONObject(jsonResponse);
@@ -300,7 +307,39 @@ public class LigaActivity extends AppCompatActivity {
                                 //tmp.setApelido(apelido);
                                 tmp.setPontuacao(pontos);
 
+                                JSONObject scouts = atletas.optJSONObject("scout");
+
+                                map = new HashMap<>();
+                                ;
+                                String chave = "";
+                                int valor = 0;
+                                if (scouts != null) {
+                                    JSONArray scoutsTags = atletas.getJSONObject("scout").names();
+
+                                    if (scoutsTags != null) {
+                                        //System.out.println("scoutsTags: " + scoutsTags);
+                                        for (int i = 0; i < scoutsTags.length(); i++) {
+                                            chave = scoutsTags.getString(i);
+
+                                            valor = scouts.getInt(chave);
+
+                                            //System.out.println("CHAVE: " + chave + " VALOR: " + valor);
+
+
+                                            map.put(chave, valor);
+                                            //System.out.println("MAP: " + map);
+
+
+                                        }
+
+
+                                    }
+                                }
+
+                                tmp.setScout(map);
                                 newlist.add(tmp);
+
+
 
                             }
                         }

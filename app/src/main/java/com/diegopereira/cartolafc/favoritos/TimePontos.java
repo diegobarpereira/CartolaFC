@@ -1,11 +1,10 @@
-package com.diegopereira.cartolafc.league;
+package com.diegopereira.cartolafc.favoritos;
 
 import com.diegopereira.cartolafc.teste.Atletas;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-import java.util.Map;
 
 public class TimePontos {
 
@@ -30,7 +29,7 @@ public class TimePontos {
     private Double parciais;
     @SerializedName("atletas")
     @Expose
-    private List<Atleta> atletas;
+    private List<com.diegopereira.cartolafc.teste.Atletas> atletas;
     @SerializedName("capitao_id")
     @Expose
     private Integer capitaoId;
@@ -43,9 +42,6 @@ public class TimePontos {
     @SerializedName("time_id")
     @Expose
     private Integer timeId;
-    @SerializedName("scout")
-    @Expose
-    private Map<String, Integer> scout;
 
     public String getQty() {
         return qty;
@@ -103,11 +99,11 @@ public class TimePontos {
         this.capitaoId = capitaoId;
     }
 
-    public List<Atleta> getAtletas() {
+    public List<com.diegopereira.cartolafc.teste.Atletas> getAtletas() {
         return atletas;
     }
 
-    public void setAtletas( List<Atleta> atletas ) {
+    public void setAtletas( List<Atletas> atletas ) {
         this.atletas = atletas;
     }
 
@@ -135,11 +131,6 @@ public class TimePontos {
         this.pontos = pontos;
     }
 
-    public Map<String, Integer> getScout() {
-        return scout;
-    }
 
-    public void setScout(Map<String, Integer> scout) {
-        this.scout = scout;
-    }
+
 }
