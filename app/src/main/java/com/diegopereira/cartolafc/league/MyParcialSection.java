@@ -168,7 +168,7 @@ public class MyParcialSection extends StatelessSection {
 
         /*
             List<TimePontos> item = database.getTimes();
-        
+
             Glide.with(context)
                     .load(item.get(position).getUrlEscudoPng())
                     .into(itemViewHolder.img_player);
@@ -203,7 +203,22 @@ public class MyParcialSection extends StatelessSection {
 
                 itemViewHolder.pos.setText(String.valueOf(position + 1));
                 itemViewHolder.var.setVisibility(View.GONE);
-                itemViewHolder.dif.setVisibility(View.GONE);
+
+                Double diff = 0.00;
+
+                for (int i = 0; i < position; i++) {
+                    itemViewHolder.dif.setVisibility(View.VISIBLE);
+
+                    diff = item.get(position).getPontosrod()-item.get(0).getPontosrod();
+
+                }
+
+
+                if( position == 0) {
+                    itemViewHolder.dif.setVisibility(View.INVISIBLE);
+                }
+
+                itemViewHolder.dif.setText(String.valueOf(formatter.format(diff)));
 
                 id = item.get(position).getTimeId();
 
@@ -257,10 +272,10 @@ public class MyParcialSection extends StatelessSection {
                                                        @Override
                                                        public void onClick( View v ) {
                                                            Toast.makeText(context, String.valueOf(finalId), Toast.LENGTH_SHORT).show();
-                                                           SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_ID, MODE_PRIVATE);
+                                                           SharedPreferences preferences = context.getSharedPreferences("SHARED_PREF_ID", MODE_PRIVATE);
                                                            SharedPreferences.Editor editor = preferences.edit();
 
-                                                           editor.putString(ID_SHARED_PREF, String.valueOf(finalId));
+                                                           editor.putString("ID_SHARED_PREF", String.valueOf(finalId));
                                                            editor.putString(QTY_SHARED_PREF, finalQty);
                                                            editor.putString(TOTAL_SHARED_PREF, String.valueOf(finalParc));
 
@@ -299,10 +314,10 @@ public class MyParcialSection extends StatelessSection {
                                                        @Override
                                                        public void onClick( View v ) {
                                                            Toast.makeText(context, String.valueOf(finalId), Toast.LENGTH_SHORT).show();
-                                                           SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_ID, MODE_PRIVATE);
+                                                           SharedPreferences preferences = context.getSharedPreferences("SHARED_PREF_ID", MODE_PRIVATE);
                                                            SharedPreferences.Editor editor = preferences.edit();
 
-                                                           editor.putString(ID_SHARED_PREF, String.valueOf(finalId));
+                                                           editor.putString("ID_SHARED_PREF", String.valueOf(finalId));
                                                            editor.putString(QTY_SHARED_PREF, finalQty);
                                                            editor.putString(TOTAL_SHARED_PREF, String.valueOf(finalParc));
 
@@ -336,14 +351,15 @@ public class MyParcialSection extends StatelessSection {
                 Integer finalId = id;
                 String finalQty = item.get(position).getQty();
                 Double finalParc = item.get(position).getParciais();
+
                 itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                                                        @Override
                                                        public void onClick( View v ) {
                                                            Toast.makeText(context, String.valueOf(finalId), Toast.LENGTH_SHORT).show();
-                                                           SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_ID, MODE_PRIVATE);
+                                                           SharedPreferences preferences = context.getSharedPreferences("SHARED_PREF_ID", MODE_PRIVATE);
                                                            SharedPreferences.Editor editor = preferences.edit();
 
-                                                           editor.putString(ID_SHARED_PREF, String.valueOf(finalId));
+                                                           editor.putString("ID_SHARED_PREF", String.valueOf(finalId));
                                                            editor.putString(QTY_SHARED_PREF, finalQty);
                                                            editor.putString(TOTAL_SHARED_PREF, String.valueOf(finalParc));
 

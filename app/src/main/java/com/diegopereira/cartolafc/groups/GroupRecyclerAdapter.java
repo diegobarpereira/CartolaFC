@@ -64,6 +64,7 @@ public class GroupRecyclerAdapter extends RecyclerView.Adapter<GroupRecyclerAdap
                 editor.apply();
                 context.startActivity(intent);
 
+                notifyDataSetChanged();
             }
         });
 

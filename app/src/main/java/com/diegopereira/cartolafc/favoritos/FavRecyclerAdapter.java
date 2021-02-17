@@ -75,4 +75,9 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
         }
     }
 
+    public void addItem(TimePontos dataObj, int index) {
+        teste.add(dataObj);
+        notifyItemInserted(index);
+    }
+
 }

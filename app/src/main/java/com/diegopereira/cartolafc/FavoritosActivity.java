@@ -31,7 +31,7 @@ public class FavoritosActivity extends AppCompatActivity {
     String time_id;
     ArrayList<TimePontos> teste = new ArrayList<>();
     RecyclerView rv_fav;
-    FavRecyclerAdapter adapter;
+    private FavRecyclerAdapter adapter;
     LinearLayoutManager linearLayoutManager;
 
 
@@ -50,43 +50,52 @@ public class FavoritosActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv_fav.setLayoutManager(linearLayoutManager);
         rv_fav.addItemDecoration(new DividerItemDecoration(rv_fav.getContext(), DividerItemDecoration.VERTICAL));
+        adapter = new FavRecyclerAdapter(getApplicationContext(), teste);
+        rv_fav.setAdapter(adapter);
 
+        addItem();
 
-        APIInterface apiInterface = ApiClient.getRetrofit().create(APIInterface.class);
-        Call<Players> call = apiInterface.getTime(time_id);
-        call.enqueue(new Callback<Players>() {
-            @Override
-            public void onResponse(Call<Players> call, Response<Players> response) {
-                TimePontos timePontos = new TimePontos();
-                timePontos.setNome(response.body().getTime().getNome());
-                timePontos.setPontos(response.body().getPontosCampeonato());
-                timePontos.setUltima(response.body().getPontos());
-                timePontos.setUrlEscudoPng(response.body().getTime().getUrlEscudoPng());
-                timePontos.setPatrimonio(response.body().getPatrimonio());
-                timePontos.setTimeId(Integer.valueOf(time_id));
-                teste.add(timePontos);
-
-                Collections.sort(teste, new Comparator<TimePontos>() {
-                    @Override
-                    public int compare(TimePontos o1, TimePontos o2) {
-                        return o2.getPontos().compareTo(o1.getPontos());
-                    }
-                });
-
-                adapter = new FavRecyclerAdapter(getApplicationContext(), teste);
-                rv_fav.setAdapter(adapter);
-
-                adapter.notifyDataSetChanged();
-
-
-            }
-
-            @Override
-            public void onFailure(Call<Players> call, Throwable t) {
-
-            }
-        });
     }
+
+    public void addItem() {
+        if (time_id != "") {
+            APIInterface apiInterface = ApiClient.getRetrofit().create(APIInterface.class);
+            Call<Players> call = apiInterface.getTime(time_id);
+            call.enqueue(new Callback<Players>() {
+                @Override
+                public void onResponse( Call<Players> call, Response<Players> response ) {
+                    TimePontos timePontos = new TimePontos();
+                    timePontos.setNome(response.body().getTime().getNome());
+                    timePontos.setPontos(response.body().getPontosCampeonato());
+                    timePontos.setUltima(response.body().getPontos());
+                    timePontos.setUrlEscudoPng(response.body().getTime().getUrlEscudoPng());
+                    timePontos.setPatrimonio(response.body().getPatrimonio());
+                    timePontos.setTimeId(Integer.valueOf(time_id));
+                    teste.add(timePontos);
+
+                    Collections.sort(teste, new Comparator<TimePontos>() {
+                        @Override
+                        public int compare( TimePontos o1, TimePontos o2 ) {
+                            return o2.getPontos().compareTo(o1.getPontos());
+                        }
+                    });
+
+                    adapter.addItem(timePontos, adapter.getItemCount());
+                    rv_fav.scrollToPosition(adapter.getItemCount() - 1);
+                    adapter.notifyDataSetChanged();
+
+
+                }
+
+                @Override
+                public void onFailure( Call<Players> call, Throwable t ) {
+
+                }
+            });
+        }
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
