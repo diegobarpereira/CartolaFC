@@ -52,6 +52,7 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
                 .into(viewHolder.favimg_player);
         viewHolder.fav_title.setText(teste.get(position).getNome());
         viewHolder.fav_points.setText(formatter.format(teste.get(position).getPontos()));
+        viewHolder.fav_ultima.setText(formatter.format(teste.get(position).getUltima()));
 
 
 
@@ -65,19 +66,16 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         AppCompatImageView favimg_player, button_add;
-        TextView fav_title, fav_points;
+        TextView fav_title, fav_points, fav_ultima;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             favimg_player=(AppCompatImageView) itemView.findViewById(R.id.favimg_player);
             button_add=(AppCompatImageView) itemView.findViewById(R.id.button_add);
             fav_title=(TextView)itemView.findViewById(R.id.fav_title);
             fav_points=(TextView)itemView.findViewById(R.id.fav_points);
+            fav_ultima=(TextView)itemView.findViewById(R.id.fav_ultima);
         }
     }
 
-    public void addItem(TimePontos dataObj, int index) {
-        teste.add(dataObj);
-        notifyItemInserted(index);
-    }
 
 }

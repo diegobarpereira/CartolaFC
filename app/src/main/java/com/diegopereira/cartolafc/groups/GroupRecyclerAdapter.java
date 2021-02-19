@@ -1,5 +1,6 @@
 package com.diegopereira.cartolafc.groups;
 
+import android.bluetooth.BluetoothGattServer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,14 +21,20 @@ import com.diegopereira.cartolafc.LigaActivity;
 import com.diegopereira.cartolafc.R;
 import com.diegopereira.cartolafc.destaques.DestaquesRecyclerAdapter;
 import com.diegopereira.cartolafc.league.TimePontos;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class GroupRecyclerAdapter extends RecyclerView.Adapter<GroupRecyclerAdapter.ViewHolder> {
     private Context context;
     private List<Input> input;
+
+    public static ArrayList<Integer> newList = new ArrayList<>();
 
     public GroupRecyclerAdapter(Context context, List<Input> input) {
         this.context=context;
@@ -58,13 +65,21 @@ public class GroupRecyclerAdapter extends RecyclerView.Adapter<GroupRecyclerAdap
                 SharedPreferences preferences = context.getSharedPreferences("GROUP", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
 
-                editor.putString("GROUP_ID", input.get(position).getTimeId().toString());
+                //editor.putString("GROUP_ID", input.get(position).getTimeId().toString());
+
+                Gson gson = new Gson();
+                String json = gson.toJson(input);
+                editor.putString("GROUP_ID", json);
+
+
                 Intent intent = new Intent(context, FavoritosActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 editor.apply();
                 context.startActivity(intent);
 
-                notifyDataSetChanged();
+                //newList.add(input.get(position).getTimeId());
+                //FavoritosActivity.ids.addAll(newList);
+
             }
         });
 

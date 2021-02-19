@@ -33,16 +33,13 @@ public class GroupActivity extends AppCompatActivity {
 
     RecyclerView rv_group;
     List<Input> list = new ArrayList<>();
-    List<Input> suggestions = new ArrayList<>();
     List<String> str;
     List<Input> input = new ArrayList<>();
     GroupRecyclerAdapter adapter;
     LinearLayoutManager linearLayoutManager;
     AutoCompleteTextView autoCompleteTextView;
     String text;
-    Button button;
     ArrayAdapter<String> actvadapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +52,8 @@ public class GroupActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv_group.setLayoutManager(linearLayoutManager);
 
-        adapter = new GroupRecyclerAdapter(getApplicationContext(), input);
-        rv_group.setAdapter(adapter);
+        //adapter = new GroupRecyclerAdapter(getApplicationContext(), input);
+        //rv_group.setAdapter(adapter);
 
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autocompletetv); // inititate a search view
 
@@ -94,7 +91,8 @@ public class GroupActivity extends AppCompatActivity {
 
                 input.add(tinput);
 
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
+
 
                 autoCompleteTextView.setText("");
 
