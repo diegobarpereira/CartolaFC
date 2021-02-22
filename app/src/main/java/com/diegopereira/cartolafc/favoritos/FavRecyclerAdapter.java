@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.diegopereira.cartolafc.FavoritosActivity;
 import com.diegopereira.cartolafc.R;
+import com.diegopereira.cartolafc.groups.DatabaseHelper;
 import com.diegopereira.cartolafc.groups.Input;
 
 import java.text.DecimalFormat;
@@ -27,9 +28,11 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.ViewHolder> {
     private Context context;
-    private List<TimePontos> teste;
+    private List<Input> teste;
 
-    public FavRecyclerAdapter(Context context, List<TimePontos> teste) {
+    private DatabaseHelper database;
+
+    public FavRecyclerAdapter(Context context, List<Input> teste) {
         this.context=context;
         this.teste=teste;
 
@@ -44,15 +47,17 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+
+        Input item = teste.get(position);
         DecimalFormat formatter = new DecimalFormat("##0.00", new DecimalFormatSymbols(Locale.US));
 
 
         Glide.with(context)
-                .load(teste.get(position).getUrlEscudoPng())
+                .load(item.getUrlEscudoPng())
                 .into(viewHolder.favimg_player);
-        viewHolder.fav_title.setText(teste.get(position).getNome());
-        viewHolder.fav_points.setText(formatter.format(teste.get(position).getPontos()));
-        viewHolder.fav_ultima.setText(formatter.format(teste.get(position).getUltima()));
+        viewHolder.fav_title.setText(item.getNome());
+        //viewHolder.fav_points.setText(formatter.format(item.get(position).getPontos()));
+        //viewHolder.fav_ultima.setText(formatter.format(item.get(position).getUltima()));
 
 
 

@@ -36,6 +36,9 @@ public class GroupRecyclerAdapter extends RecyclerView.Adapter<GroupRecyclerAdap
 
     public static ArrayList<Integer> newList = new ArrayList<>();
 
+    private DatabaseHelper database;
+
+
     public GroupRecyclerAdapter(Context context, List<Input> input) {
         this.context=context;
         this.input=input;
@@ -67,9 +70,6 @@ public class GroupRecyclerAdapter extends RecyclerView.Adapter<GroupRecyclerAdap
 
                 //editor.putString("GROUP_ID", input.get(position).getTimeId().toString());
 
-                Gson gson = new Gson();
-                String json = gson.toJson(input);
-                editor.putString("GROUP_ID", json);
 
 
                 Intent intent = new Intent(context, FavoritosActivity.class);
@@ -77,8 +77,9 @@ public class GroupRecyclerAdapter extends RecyclerView.Adapter<GroupRecyclerAdap
                 editor.apply();
                 context.startActivity(intent);
 
-                //newList.add(input.get(position).getTimeId());
-                //FavoritosActivity.ids.addAll(newList);
+                database = new DatabaseHelper(context);
+                database.insert(input.get(position).getNome(), input.get(position).getNomeCartola(), input.get(position).getUrlEscudoPng(), input.get(position).getTimeId());
+
 
             }
         });

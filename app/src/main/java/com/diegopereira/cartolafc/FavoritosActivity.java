@@ -16,6 +16,7 @@ import com.diegopereira.cartolafc.favoritos.ApiClient;
 import com.diegopereira.cartolafc.favoritos.FavRecyclerAdapter;
 import com.diegopereira.cartolafc.favoritos.Players;
 import com.diegopereira.cartolafc.favoritos.TimePontos;
+import com.diegopereira.cartolafc.groups.DatabaseHelper;
 import com.diegopereira.cartolafc.groups.GroupRecyclerAdapter;
 import com.diegopereira.cartolafc.groups.Input;
 import com.diegopereira.cartolafc.teste.RecyclerViewAdapter;
@@ -35,34 +36,22 @@ import retrofit2.Response;
 public class FavoritosActivity extends AppCompatActivity {
 
     String time_id;
-    ArrayList<TimePontos> teste = new ArrayList<>();
-    //public static ArrayList<Integer> ids = new ArrayList<>();
+    ArrayList<Input> teste = new ArrayList<>();
     List<Input> test;
     RecyclerView rv_fav;
     public static FavRecyclerAdapter adapter;
     LinearLayoutManager linearLayoutManager;
+
+    private DatabaseHelper database;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favoritos);
 
         SharedPreferences sharedPref = getSharedPreferences("GROUP", MODE_PRIVATE);
-        //time_id = sharedPref.getString("GROUP_ID", "");
+        time_id = sharedPref.getString("GROUP_ID", "");
 
-        //System.out.println("TIME_ID: " + time_id);
-
-        Gson gson = new Gson();
-        String json = sharedPref.getString("GROUP_ID", "");
-        //ArrayList<Input> obj = gson.fromJson(json, (Type) Input.class);
-
-        test = new Gson().fromJson(sharedPref.getString("GROUP_ID", null), new TypeToken<List<Input>>(){}.getType());
-        //String test = gson.fromJson(json, String.class);
-
-
-        System.out.println("OBJ: " + test);
-
-
-
+        database = new DatabaseHelper(getApplicationContext());
 
         rv_fav = findViewById(R.id.rv_fav);
         rv_fav.setHasFixedSize(true);
@@ -70,14 +59,13 @@ public class FavoritosActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv_fav.setLayoutManager(linearLayoutManager);
         rv_fav.addItemDecoration(new DividerItemDecoration(rv_fav.getContext(), DividerItemDecoration.VERTICAL));
-        adapter = new FavRecyclerAdapter(getApplicationContext(), teste);
-        rv_fav.setAdapter(adapter);
+        //adapter = new FavRecyclerAdapter(getApplicationContext(), teste);
+        rv_fav.setAdapter(new FavRecyclerAdapter(getApplicationContext(), database.getTimes()));
 
-        addItem();
+        //rv_fav.setAdapter(adapter);
 
-        //ids.add(Integer.valueOf(time_id));
+        //addItem();
 
-        //System.out.println("IDS: " + ids);
 
 
     }
@@ -86,42 +74,45 @@ public class FavoritosActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
     }
 
+    /*
     public void addItem() {
-        if (!String.valueOf(test).equals("")) {
-            for (int i = 0; i < test.size(); i++) {
+        //if (!String.valueOf(test).equals("")) {
+            //for (int i = 0; i < test.size(); i++) {
                 APIInterface apiInterface = ApiClient.getRetrofit().create(APIInterface.class);
-                //Call<Players> call = apiInterface.getTime(time_id);
-                System.out.println("dsvgfdvgf: " + test.get(i).getTimeId());
-                Call<Players> call = apiInterface.getTime(test.get(i).getTimeId().toString());
-                int finalI = i;
+                Call<Players> call = apiInterface.getTime(time_id);
+                //System.out.println("dsvgfdvgf: " + test.get(i).getTimeId());
+                //Call<Players> call = apiInterface.getTime(test.get(i).getTimeId().toString());
+                //int finalI = i;
                 call.enqueue(new Callback<Players>() {
                     @Override
                     public void onResponse(Call<Players> call, Response<Players> response) {
-                        TimePontos timePontos = new TimePontos();
-                        timePontos.setNome(response.body().getTime().getNome());
-                        timePontos.setPontos(response.body().getPontosCampeonato());
-                        timePontos.setUltima(response.body().getPontos());
-                        timePontos.setUrlEscudoPng(response.body().getTime().getUrlEscudoPng());
-                        timePontos.setPatrimonio(response.body().getPatrimonio());
-                        timePontos.setTimeId(test.get(finalI).getTimeId());
-                        teste.add(timePontos);
+                        if (response.code() == 200) {
+                            TimePontos timePontos = new TimePontos();
+                            timePontos.setNome(response.body().getTime().getNome());
+                            timePontos.setPontos(response.body().getPontosCampeonato());
+                            timePontos.setUltima(response.body().getPontos());
+                            timePontos.setUrlEscudoPng(response.body().getTime().getUrlEscudoPng());
+                            timePontos.setPatrimonio(response.body().getPatrimonio());
+                            timePontos.setTimeId(Integer.valueOf(time_id));
+                            teste.add(timePontos);
 
-                        Collections.sort(teste, new Comparator<TimePontos>() {
-                            @Override
-                            public int compare(TimePontos o1, TimePontos o2) {
-                                return o2.getPontos().compareTo(o1.getPontos());
-                            }
-                        });
-
-
-                        //adapter = new FavRecyclerAdapter(getApplicationContext(), teste);
-                        //rv_fav.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+                            Collections.sort(teste, new Comparator<TimePontos>() {
+                                @Override
+                                public int compare( TimePontos o1, TimePontos o2 ) {
+                                    return o2.getPontos().compareTo(o1.getPontos());
+                                }
+                            });
 
 
+                            //adapter = new FavRecyclerAdapter(getApplicationContext(), teste);
+                            //rv_fav.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+
+
+                        }
                     }
 
                     @Override
@@ -130,10 +121,10 @@ public class FavoritosActivity extends AppCompatActivity {
                     }
                 });
             }
-        }
-    }
+        //}
+    //}
 
-
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
