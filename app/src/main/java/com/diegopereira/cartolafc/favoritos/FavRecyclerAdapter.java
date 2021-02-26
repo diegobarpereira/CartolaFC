@@ -28,11 +28,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.ViewHolder> {
     private Context context;
-    private List<Input> teste;
+    private List<TimePontos> teste;
 
-    private DatabaseHelper database;
-
-    public FavRecyclerAdapter(Context context, List<Input> teste) {
+    public FavRecyclerAdapter(Context context, List<TimePontos> teste) {
         this.context=context;
         this.teste=teste;
 
@@ -48,16 +46,33 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
 
-        Input item = teste.get(position);
-        DecimalFormat formatter = new DecimalFormat("##0.00", new DecimalFormatSymbols(Locale.US));
+       DecimalFormat formatter = new DecimalFormat("##0.00", new DecimalFormatSymbols(Locale.US));
 
 
         Glide.with(context)
-                .load(item.getUrlEscudoPng())
+                .load(teste.get(position).getUrlEscudoPng())
                 .into(viewHolder.favimg_player);
-        viewHolder.fav_title.setText(item.getNome());
-        //viewHolder.fav_points.setText(formatter.format(item.get(position).getPontos()));
-        //viewHolder.fav_ultima.setText(formatter.format(item.get(position).getUltima()));
+        viewHolder.fav_title.setText(teste.get(position).getNome());
+        viewHolder.fav_points.setText(formatter.format(teste.get(position).getPontos()));
+        viewHolder.fav_ultima.setText(formatter.format(teste.get(position).getUltima()));
+        viewHolder.fav_cash.setText(formatter.format(teste.get(position).getPatrimonio()));
+        viewHolder.fav_pos.setText(String.valueOf(position + 1));
+
+        Double diff = 0.00;
+
+        for (int i = 0; i < position; i++) {
+            viewHolder.fav_dif.setVisibility(View.VISIBLE);
+
+            diff = teste.get(position).getPontos()-teste.get(0).getPontos();
+
+        }
+
+
+        if( position == 0) {
+            viewHolder.fav_dif.setVisibility(View.INVISIBLE);
+        }
+
+        viewHolder.fav_dif.setText(String.valueOf(formatter.format(diff)));
 
 
 
@@ -71,7 +86,7 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         AppCompatImageView favimg_player, button_add;
-        TextView fav_title, fav_points, fav_ultima;
+        TextView fav_title, fav_points, fav_ultima, fav_pos, fav_cash, fav_dif;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             favimg_player=(AppCompatImageView) itemView.findViewById(R.id.favimg_player);
@@ -79,6 +94,9 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
             fav_title=(TextView)itemView.findViewById(R.id.fav_title);
             fav_points=(TextView)itemView.findViewById(R.id.fav_points);
             fav_ultima=(TextView)itemView.findViewById(R.id.fav_ultima);
+            fav_pos=(TextView)itemView.findViewById(R.id.fav_pos);
+            fav_cash=(TextView)itemView.findViewById(R.id.fav_cash);
+            fav_dif=(TextView)itemView.findViewById(R.id.fav_dif);
         }
     }
 

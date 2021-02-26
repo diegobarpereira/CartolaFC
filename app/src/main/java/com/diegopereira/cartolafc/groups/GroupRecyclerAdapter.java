@@ -34,8 +34,6 @@ public class GroupRecyclerAdapter extends RecyclerView.Adapter<GroupRecyclerAdap
     private Context context;
     private List<Input> input;
 
-    public static ArrayList<Integer> newList = new ArrayList<>();
-
     private DatabaseHelper database;
 
 
@@ -65,20 +63,16 @@ public class GroupRecyclerAdapter extends RecyclerView.Adapter<GroupRecyclerAdap
         viewHolder.button_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences preferences = context.getSharedPreferences("GROUP", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
 
-                //editor.putString("GROUP_ID", input.get(position).getTimeId().toString());
-
-
+                database = new DatabaseHelper(context);
+                database.insert(input.get(position).getTimeId());
 
                 Intent intent = new Intent(context, FavoritosActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                editor.apply();
+
                 context.startActivity(intent);
 
-                database = new DatabaseHelper(context);
-                database.insert(input.get(position).getNome(), input.get(position).getNomeCartola(), input.get(position).getUrlEscudoPng(), input.get(position).getTimeId());
+
 
 
             }

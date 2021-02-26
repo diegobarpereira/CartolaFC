@@ -1,12 +1,11 @@
 package com.diegopereira.cartolafc.favoritos;
 
-import com.diegopereira.cartolafc.teste.Atletas;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class TimePontos {
+public class TimePontos  {
 
 
     @SerializedName("nome")
@@ -29,7 +28,7 @@ public class TimePontos {
     private Double parciais;
     @SerializedName("atletas")
     @Expose
-    private List<com.diegopereira.cartolafc.teste.Atletas> atletas;
+    private List<Atletas> atletas;
     @SerializedName("capitao_id")
     @Expose
     private Integer capitaoId;
@@ -99,7 +98,7 @@ public class TimePontos {
         this.capitaoId = capitaoId;
     }
 
-    public List<com.diegopereira.cartolafc.teste.Atletas> getAtletas() {
+    public List<Atletas> getAtletas() {
         return atletas;
     }
 

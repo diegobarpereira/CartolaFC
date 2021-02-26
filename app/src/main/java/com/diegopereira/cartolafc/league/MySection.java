@@ -132,11 +132,13 @@ public class MySection extends Section {
 
         if (isClicked || ultimaisClicked) {
             itemViewHolder.dif.setVisibility(View.INVISIBLE);
+            itemViewHolder.var.setVisibility(View.GONE);
+
 
         }
         for (int k = 0; k < list.size(); k++) {
             if (ultimaisClicked) {
-                itemViewHolder.pos.setText(position + 1);
+                itemViewHolder.pos.setText(String.valueOf(position + 1));
             }
         }
 
@@ -176,12 +178,15 @@ public class MySection extends Section {
                     isClicked = TRUE;
 
                     LeagueActivity.sortTotalASC();
+                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
 
                     i++;
                 }
                 else if (i == 1) {
                     //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
                     LeagueActivity.sortTotalDESC();
+                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
+
                     isClicked = FALSE;
 
                     i = 0;
@@ -198,12 +203,16 @@ public class MySection extends Section {
                     ultimaisClicked = TRUE;
 
                     LeagueActivity.sortUltimaASC();
+                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
+
 
                     j++;
                 }
                 else if (j == 1) {
                     //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
                     LeagueActivity.sortUltimaDESC();
+                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
+
                     ultimaisClicked = FALSE;
 
                     j = 0;

@@ -102,6 +102,25 @@ public class LeagueActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);   //show back button
 
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefreshLeague);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (stat.equals("1")) {
+                    sectionAdapter.removeAllSections();
+                    sectionAdapter.notifyDataSetChanged();
+                    loadLeague();
+                }
+                if (stat.equals("2")) {
+                    teste.clear();
+                    loadParciais();
+                    database.delete();
+
+                }
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+
         sectionAdapter = new SectionedRecyclerViewAdapter();
 
         SharedPreferences sharedPref = getSharedPreferences(SHAREDMAIN_PREF_NAME, MODE_PRIVATE);
@@ -133,12 +152,14 @@ public class LeagueActivity extends AppCompatActivity {
 
 
         if (stat.equals("1")) {
+
             loadLeague();
 
         } if (stat.equals("2")) {
 
             com.diegopereira.cartolafc.league.MyParcialSection section2 = new MyParcialSection(getApplicationContext(), nome, teste, mapparciais);
             sectionAdapter.addSection(section2);
+
             recyclerView.setAdapter(sectionAdapter);
             database = new DatabaseHelper(getApplicationContext());
             getApplicationContext().deleteDatabase(database.getDatabaseName());
@@ -151,22 +172,7 @@ public class LeagueActivity extends AppCompatActivity {
             loadParciais();
         }
 
-        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefreshLeague);
-        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (stat.equals("1")) {
-                    loadLeague();
-                }
-                if (stat.equals("2")) {
-                    teste.clear();
-                    loadParciais();
-                    database.delete();
 
-                }
-                pullToRefresh.setRefreshing(false);
-            }
-        });
 
 
 
@@ -185,11 +191,15 @@ public class LeagueActivity extends AppCompatActivity {
 
                 sortTotalDESC();
 
+
                 com.diegopereira.cartolafc.league.MySection section1 = new MySection(getApplicationContext() ,  nome, list);
                 sectionAdapter.addSection(section1);
-                //adapter = new RecyclerViewAdapter(LeagueActivity.this, list);
-
+                //sectionAdapter.notifyDataSetChanged();
                 recyclerView.setAdapter(sectionAdapter);
+
+
+
+
 
 
             }
@@ -344,17 +354,8 @@ public class LeagueActivity extends AppCompatActivity {
 
         }
 
-        public static void sortTotalASC() {
 
-                Collections.sort(list, new Comparator<Times>() {
-                    @Override
-                    public int compare(Times o1, Times o2) {
-                        return (o2.getRanking().getCampeonato()).compareTo(o1.getRanking().getCampeonato());
-                    }
-                });
-            sectionAdapter.notifyDataSetChanged();
 
-        }
 
         public static void sortTotalDESC() {
 
@@ -367,6 +368,19 @@ public class LeagueActivity extends AppCompatActivity {
             sectionAdapter.notifyDataSetChanged();
 
         }
+
+
+    public static void sortTotalASC() {
+
+        Collections.sort(list, new Comparator<Times>() {
+            @Override
+            public int compare(Times o1, Times o2) {
+                return (o2.getRanking().getCampeonato()).compareTo(o1.getRanking().getCampeonato());
+            }
+        });
+        sectionAdapter.notifyDataSetChanged();
+
+    }
 
     public static void sortUltimaASC() {
 

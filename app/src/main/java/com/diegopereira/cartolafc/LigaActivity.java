@@ -110,8 +110,6 @@ public class LigaActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(manager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
-        loadParciais();
-
         //preferences = getSharedPreferences(SHARED_PREF_ID, MODE_PRIVATE);
         preferences = getSharedPreferences("SHARED_PREF_ID", MODE_PRIVATE);
 
@@ -120,7 +118,19 @@ public class LigaActivity extends AppCompatActivity {
 
         qty = preferences.getString(QTY_SHARED_PREF, String.valueOf("0/0"));
 
-        loadLiga();
+        SharedPreferences sharedPref = getSharedPreferences(SHAREDMAIN_PREF_NAME, MODE_PRIVATE);
+        stat = sharedPref.getString(MAIN_SHARED_PREF, "N/A");
+
+        if (stat.equals("1")) {
+            loadLiga();
+            loadParciais();
+
+        } if (stat.equals("2")) {
+            loadLiga();
+            loadParciais();
+        }
+
+
 
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh6);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -132,8 +142,11 @@ public class LigaActivity extends AppCompatActivity {
                 if (stat.equals("1")) {
                     adapter.notifyDataSetChanged();
                     loadLiga(); // your code
+                    loadParciais();
+
                 }
                 if (stat.equals("2")) {
+                    loadLiga();
                     rodadapter.notifyDataSetChanged();
                     loadParciais();
                 }

@@ -249,6 +249,7 @@ public class LigaRecyclerAdapter extends RecyclerView.Adapter<LigaRecyclerAdapte
         if (stat.equals("1")) {
             DecimalFormat formatter = new DecimalFormat("##0.00", new DecimalFormatSymbols(Locale.US));
             holder.tv_pontos.setText(formatter.format(list.get(position).getPontosNum()));
+            System.out.println(formatter.format(list.get(position).getPontosNum()));
             if (atletaId.equals(capitao)) {
                 holder.tv_pontos.setText("(" + formatter.format(list.get(position).getPontosNum()) + " x2) " + formatter.format(list.get(position).getPontosNum() * 2));
                 holder.tv_pontos.setTypeface(null, Typeface.BOLD);
