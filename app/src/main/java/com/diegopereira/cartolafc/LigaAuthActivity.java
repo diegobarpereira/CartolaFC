@@ -1,10 +1,15 @@
 package com.diegopereira.cartolafc;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +53,7 @@ public class LigaAuthActivity extends AppCompatActivity {
 
 
     boolean sync;
-    String token;
+    String token = "";
     private ProgressBar loadProgress;
 
     SectionedRecyclerViewAdapter sectionAdapter;
@@ -105,9 +110,20 @@ public class LigaAuthActivity extends AppCompatActivity {
 
         System.out.println("token: " + token);
 
-
-        loadLigas();
-
+        if (token.isEmpty()) {
+            loadProgress.setVisibility(View.GONE);
+            Toast toast = Toast.makeText(getApplicationContext(), "Não Logado!!!", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+            LinearLayout toastLL = (LinearLayout) toast.getView();
+            toastLL.setBackgroundColor(Color.WHITE);
+            TextView toastTV = (TextView) toastLL.getChildAt(0);
+            toastTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            toastTV.setTextColor(Color.BLACK);
+            toastTV.setTextSize(22);
+            toast.show();
+        } else {
+            loadLigas();
+        }
 
     }
 
@@ -241,4 +257,6 @@ public class LigaAuthActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
-    }}
+    }
+
+}

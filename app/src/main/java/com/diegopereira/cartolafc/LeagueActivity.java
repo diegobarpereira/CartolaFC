@@ -61,8 +61,8 @@ import static com.diegopereira.cartolafc.ligaauth.MySection.SLUG_SHARED_PREF;
 import static com.diegopereira.cartolafc.ligaauth.MySection.NAME_SHARED_PREF;
 
 
-import static com.diegopereira.cartolafc.LoginActivity.SHARED_PREF_NAME;
-import static com.diegopereira.cartolafc.LoginActivity.SHARED_TOKEN;
+import static com.diegopereira.cartolafc.WebViewActivity.SHARED_PREF_NAME;
+import static com.diegopereira.cartolafc.WebViewActivity.SHARED_TOKEN;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.lang.Boolean.getBoolean;
@@ -88,7 +88,7 @@ public class LeagueActivity extends AppCompatActivity {
     Double pontos;
 
     String nome;
-    String token;
+    String token = "";
     String stat;
 
     private ProgressBar loadProgress;
@@ -106,7 +106,7 @@ public class LeagueActivity extends AppCompatActivity {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (stat.equals("1")) {
+                if (stat.equals("1") || stat.equals("6")) {
                     sectionAdapter.removeAllSections();
                     sectionAdapter.notifyDataSetChanged();
                     loadLeague();
@@ -151,7 +151,7 @@ public class LeagueActivity extends AppCompatActivity {
 
 
 
-        if (stat.equals("1")) {
+        if (stat.equals("1") || stat.equals("6")) {
 
             loadLeague();
 

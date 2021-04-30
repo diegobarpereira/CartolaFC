@@ -166,8 +166,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
-        if (id == R.id.login) {
+        /*if (id == R.id.login) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            return true;
+        } */
+        if (id == R.id.login) {
+            Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
             startActivity(intent);
             return true;
         }
