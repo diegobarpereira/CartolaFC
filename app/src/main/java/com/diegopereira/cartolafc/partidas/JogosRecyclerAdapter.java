@@ -89,13 +89,19 @@ public class JogosRecyclerAdapter extends RecyclerView.Adapter<JogosRecyclerAdap
                     .replace("282", poscasa + "º " + "Atlético-MG")
                     .replace("284", poscasa + "º " + "Grêmio")
                     .replace("285", poscasa + "º " + "Internacional")
+                    .replace("286", poscasa + "º " + "Juventude")
                     .replace("290", poscasa + "º " + "Goiás")
                     .replace("292", poscasa + "º " + "Sport")
                     .replace("293", poscasa + "º " + "Athlético-PR")
                     .replace("294", poscasa + "º " + "Coritiba")
+                    .replace("314", poscasa + "º " + "Avaí")
+                    .replace("315", poscasa + "º " + "Chapecoense")
+                    .replace("327", poscasa + "º " + "América-MG")
+                    .replace("341", poscasa + "º " + "CSA")
                     .replace("354", poscasa + "º " + "Ceará")
                     .replace("356", poscasa + "º " + "Fortaleza")
-                    .replace("373", poscasa + "º " + "Atlético-GO");
+                    .replace("373", poscasa + "º " + "Atlético-GO")
+                    .replace("1371", poscasa + "º " + "Cuiabá");
         } else {
             casa = String.valueOf(list.get(position).getClubeCasaId())
                     .replace("262", "Flamengo")
@@ -111,13 +117,19 @@ public class JogosRecyclerAdapter extends RecyclerView.Adapter<JogosRecyclerAdap
                     .replace("282", "Atlético-MG")
                     .replace("284", "Grêmio")
                     .replace("285", "Internacional")
+                    .replace("286", "Juventude")
                     .replace("290", "Goiás")
                     .replace("292", "Sport")
                     .replace("293", "Athlético-PR")
                     .replace("294", "Coritiba")
+                    .replace("314", "Avaí")
+                    .replace("315", "Chapecoense")
+                    .replace("327", "América-MG")
+                    .replace("341", "CSA")
                     .replace("354", "Ceará")
                     .replace("356", "Fortaleza")
-                    .replace("373", "Atlético-GO");
+                    .replace("373", "Atlético-GO")
+                    .replace("1371", "Cuiabá");
         }
         //Log.d("TAG", casa);
 
@@ -137,13 +149,19 @@ public class JogosRecyclerAdapter extends RecyclerView.Adapter<JogosRecyclerAdap
                     .replace("282", "Atlético-MG" + " " + posvis + "º")
                     .replace("284", "Grêmio" + " " + posvis + "º")
                     .replace("285", "Internacional" + " " + posvis + "º")
+                    .replace("286", "Juventude" + " " + posvis + "º")
                     .replace("290", "Goiás" + " " + posvis + "º")
                     .replace("292", "Sport" + " " + posvis + "º")
                     .replace("293", "Athlético-PR" + " " + posvis + "º")
                     .replace("294", "Coritiba" + " " + posvis + "º")
+                    .replace("314", "Avaí" + " " + posvis + "º")
+                    .replace("315", "Chapecoense" + " " + posvis + "º")
+                    .replace("327", "América-MG" + " " + posvis + "º")
+                    .replace("341", "CSA" + " " + posvis + "º")
                     .replace("354", "Ceará" + " " + posvis + "º")
                     .replace("356", "Fortaleza" + " " + posvis + "º")
-                    .replace("373", "Atlético-GO" + " " + posvis + "º");
+                    .replace("373", "Atlético-GO" + " " + posvis + "º")
+                    .replace("1371", "Cuiabá" + " " + posvis + "º");
         } else {
             visitante = String.valueOf(list.get(position).getClubeVisitanteId())
                     .replace("262", "Flamengo")
@@ -159,13 +177,19 @@ public class JogosRecyclerAdapter extends RecyclerView.Adapter<JogosRecyclerAdap
                     .replace("282", "Atlético-MG")
                     .replace("284", "Grêmio")
                     .replace("285", "Internacional")
+                    .replace("286", "Juventude")
                     .replace("290", "Goiás")
                     .replace("292", "Sport")
                     .replace("293", "Athlético-PR")
                     .replace("294", "Coritiba")
+                    .replace("314", "Avaí")
+                    .replace("315", "Chapecoense")
+                    .replace("327", "América-MG")
+                    .replace("341", "CSA")
                     .replace("354", "Ceará")
                     .replace("356", "Fortaleza")
-                    .replace("373", "Atlético-GO");
+                    .replace("373", "Atlético-GO")
+                    .replace("1371", "Cuiabá");
         }
 
 
@@ -425,6 +449,54 @@ public class JogosRecyclerAdapter extends RecyclerView.Adapter<JogosRecyclerAdap
         if (visitante.contains("Atlético-GO")) {
             Picasso.with(context)
                     .load("https://s.glbimg.com/es/sde/f/organizacoes/2020/07/02/atletico-go-2020-65.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube2);
+        }
+        if (casa.contains("Juventude")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2016/05/08/juventude65.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube1);
+        }
+        if (visitante.contains("Juventude")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2016/05/08/juventude65.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube2);
+        }
+        if (casa.contains("Chapecoense")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2015/08/03/Escudo-Chape-165.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube1);
+        }
+        if (visitante.contains("Chapecoense")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2015/08/03/Escudo-Chape-165.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube2);
+        }
+        if (casa.contains("América-MG")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2019/02/28/escudo65_1.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube1);
+        }
+        if (visitante.contains("América-MG")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2019/02/28/escudo65_1.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube2);
+        }
+        if (casa.contains("Cuiabá")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2014/04/16/cuiaba65.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube1);
+        }
+        if (visitante.contains("Cuiabá")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2014/04/16/cuiaba65.png")
                     .resize(70, 70)
                     .into(holder.img_clube2);
         }

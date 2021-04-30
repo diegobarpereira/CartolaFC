@@ -83,13 +83,19 @@ public class JogadoresRecyclerAdapter extends RecyclerView.Adapter<JogadoresRecy
                     .replace("282", "Atlético-MG")
                     .replace("284", "Grêmio")
                     .replace("285", "Internacional")
+                    .replace("286", "Juventude")
                     .replace("290", "Goiás")
                     .replace("292", "Sport")
                     .replace("293", "Athlético-PR")
                     .replace("294", "Coritiba")
+                    .replace("314", "Avaí")
+                    .replace("315", "Chapecoense")
+                    .replace("327", "América-MG")
+                    .replace("341", "CSA")
                     .replace("354", "Ceará")
                     .replace("356", "Fortaleza")
-                    .replace("373", "Atlético-GO"));
+                    .replace("373", "Atlético-GO")
+                    .replace("1371", "Cuiabá"));
 
 
             if (list.get(position).getFoto() == null) {

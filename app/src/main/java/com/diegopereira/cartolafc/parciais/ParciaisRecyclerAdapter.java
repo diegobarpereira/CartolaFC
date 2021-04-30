@@ -83,7 +83,7 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
                 .replace("6", "Técnico")
         );
 
-        String clube = String.valueOf(list.get(position).getClubeId()) 
+        String clube = String.valueOf(list.get(position).getClubeId())
                 .replace("262", "Flamengo")
                 .replace("263", "Botafogo")
                 .replace("264", "Corinthians")
@@ -97,13 +97,19 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
                 .replace("282", "Atlético-MG")
                 .replace("284", "Grêmio")
                 .replace("285", "Internacional")
+                .replace("286", "Juventude")
                 .replace("290", "Goiás")
                 .replace("292", "Sport")
                 .replace("293", "Athlético-PR")
                 .replace("294", "Coritiba")
+                .replace("314", "Avaí")
+                .replace("315", "Chapecoense")
+                .replace("327", "América-MG")
+                .replace("341", "CSA")
                 .replace("354", "Ceará")
                 .replace("356", "Fortaleza")
-                .replace("373", "Atlético-GO");
+                .replace("373", "Atlético-GO")
+                .replace("1371", "Cuiabá");
 
         if (clube.equals("Flamengo")) {
             Picasso.with(context)
@@ -224,8 +230,36 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
                     .load("https://s.glbimg.com/es/sde/f/organizacoes/2020/07/02/atletico-go-2020-65.png")
                     .resize(70, 70)
                     .into(holder.img_clube);
-
-
+        }
+        if (clube.equals("Cuiabá")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2014/04/16/cuiaba65.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube);
+        }
+        if (clube.equals("América-MG")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2019/02/28/escudo65_1.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube);
+        }
+        if (clube.equals("Chapecoense")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2015/08/03/Escudo-Chape-165.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube);
+        }
+        if (clube.equals("Avaí")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2015/08/03/Escudo-Chape-165.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube);
+        }
+        if (clube.equals("Juventude")) {
+            Picasso.with(context)
+                    .load("https://s.glbimg.com/es/sde/f/organizacoes/2016/05/08/juventude65.png")
+                    .resize(70, 70)
+                    .into(holder.img_clube);
         }
 
     }
