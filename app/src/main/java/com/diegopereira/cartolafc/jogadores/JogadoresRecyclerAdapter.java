@@ -18,14 +18,24 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class JogadoresRecyclerAdapter extends RecyclerView.Adapter<JogadoresRecyclerAdapter.ViewHolder> {
     private Context context;
     private List<Atleta> list;
+    private Map<Integer,Clubes> map;
+    private Map<Integer,Posicoes> posicoes;
+    private Map<Integer,Status> status;
+    private String clube;
+    private String posicao;
+    private String stats;
 
-    public JogadoresRecyclerAdapter(Context context, List<Atleta> list) {
+    public JogadoresRecyclerAdapter(Context context, List<Atleta> list, Map<Integer,Clubes> map, Map<Integer,Posicoes> posicoes, Map<Integer,Status> status) {
         this.context = context;
         this.list = list;
+        this.map = map;
+        this.posicoes = posicoes;
+        this.status = status;
     }
 
     @NonNull
@@ -44,58 +54,35 @@ public class JogadoresRecyclerAdapter extends RecyclerView.Adapter<JogadoresRecy
             String get_preco = formatter.format(list.get(position).getPrecoNum());
             holder.tv_preco.setText("C$: " + get_preco);
 
-
             String get_media = formatter.format(list.get(position).getMediaNum());
             holder.tv_media.setText("Média: " + get_media);
 
             String get_ultima = formatter.format((list.get(position).getPontosNum()));
             holder.tv_ultima.setText("Última " + get_ultima);
 
-            String status = list.get(position).getStatusId()
-                    .replace("2", "Dúvida")
-                    .replace("3", "Suspenso")
-                    .replace("5", "Contundido")
-                    .replace("6", "Nulo")
-                    .replace("7", "Provável");
+            for(Map.Entry<Integer, Status> entry:status.entrySet()) {
+                //System.out.println(entry.getKey() + " / " + entry.getValue().getNome());
+                if ((list.get(position).getStatusId()).equals(entry.getValue().getId())) {
+                    stats = entry.getValue().getNome();
+                }
+            }
+            holder.tv_status.setText(stats);
 
-            holder.tv_status.setText(status);
+            for(Map.Entry<Integer, Posicoes> entry:posicoes.entrySet()) {
+                //System.out.println(entry.getKey() + " / " + entry.getValue().getNome());
+                if ((list.get(position).getPosicaoId()).equals(entry.getValue().getId())) {
+                    posicao = entry.getValue().getNome();
+                }
+            }
+            holder.tv_posicao.setText(posicao);
 
+            for(Map.Entry<Integer, Clubes> entry:map.entrySet()) {
+                if ((list.get(position).getClubeId()).equals(String.valueOf(entry.getValue().getId()))) {
+                    clube = entry.getValue().getNome();
+                }
+            }
 
-            holder.tv_posicao.setText(String.valueOf(list.get(position).getPosicaoId())
-                    .replace("1", "Goleiro")
-                    .replace("2", "Lateral")
-                    .replace("3", "Zagueiro")
-                    .replace("4", "Meia")
-                    .replace("5", "Atacante")
-                    .replace("6", "Técnico")
-            );
-            holder.tv_clube.setText(String.valueOf(list.get(position).getClubeId())
-                    .replace("262", "Flamengo")
-                    .replace("263", "Botafogo")
-                    .replace("264", "Corinthians")
-                    .replace("265", "Bahia")
-                    .replace("266", "Fluminense")
-                    .replace("267", "Vasco")
-                    .replace("275", "Palmeiras")
-                    .replace("276", "São Paulo")
-                    .replace("277", "Santos")
-                    .replace("280", "Bragantino")
-                    .replace("282", "Atlético-MG")
-                    .replace("284", "Grêmio")
-                    .replace("285", "Internacional")
-                    .replace("286", "Juventude")
-                    .replace("290", "Goiás")
-                    .replace("292", "Sport")
-                    .replace("293", "Athlético-PR")
-                    .replace("294", "Coritiba")
-                    .replace("314", "Avaí")
-                    .replace("315", "Chapecoense")
-                    .replace("327", "América-MG")
-                    .replace("341", "CSA")
-                    .replace("354", "Ceará")
-                    .replace("356", "Fortaleza")
-                    .replace("373", "Atlético-GO")
-                    .replace("1371", "Cuiabá"));
+            holder.tv_clube.setText(clube);
 
 
             if (list.get(position).getFoto() == null) {

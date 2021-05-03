@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.diegopereira.cartolafc.partidas.ApiClient;
+import com.diegopereira.cartolafc.partidas.Clubes;
 import com.diegopereira.cartolafc.partidas.CounterHandler;
 import com.diegopereira.cartolafc.partidas.Example;
 import com.diegopereira.cartolafc.partidas.JogosRecyclerAdapter;
@@ -25,7 +26,9 @@ import com.diegopereira.cartolafc.partidas.RequestInterface;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +40,7 @@ public class JogosActivity extends AppCompatActivity implements CounterHandler.C
 
     RecyclerView recyclerView;
     List<Partida> list = new ArrayList<>();
+    Map<Integer, Clubes> map = new HashMap();
     public static JogosRecyclerAdapter adapter;
     public static Integer rodadaatual;
     public static Integer rodada = MainActivity.rodada_;
@@ -105,6 +109,7 @@ public class JogosActivity extends AppCompatActivity implements CounterHandler.C
             @Override
             public void onResponse(Call<Example> call, Response<Example> response) {
                 list = response.body().getPartidas();
+                map = response.body().getClubes();
                 rodadaatual = response.body().getRodada();
 
                 Collections.sort(list, new Comparator<Partida>() {
@@ -114,7 +119,7 @@ public class JogosActivity extends AppCompatActivity implements CounterHandler.C
                     }
                 });
 
-                adapter = new JogosRecyclerAdapter(JogosActivity.this, list);
+                adapter = new JogosRecyclerAdapter(JogosActivity.this, list, map);
 
                 recyclerView.setAdapter(adapter);
             }

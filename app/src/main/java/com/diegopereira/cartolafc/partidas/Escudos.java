@@ -1,4 +1,4 @@
-package com.diegopereira.cartolafc.parciais;
+package com.diegopereira.cartolafc.partidas;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

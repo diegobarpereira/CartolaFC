@@ -23,9 +23,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.diegopereira.cartolafc.parciais.APIInterface;
 import com.diegopereira.cartolafc.parciais.Atletas;
+import com.diegopereira.cartolafc.parciais.Clubes;
 import com.diegopereira.cartolafc.parciais.DatabaseHelper;
 import com.diegopereira.cartolafc.parciais.Parciais;
 import com.diegopereira.cartolafc.parciais.ParciaisRecyclerAdapter;
+import com.diegopereira.cartolafc.parciais.Posicoes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -58,6 +60,9 @@ public class ParciaisActivity extends AppCompatActivity {
     private DatabaseHelper database;
 
     public static ArrayList<Atletas> list;
+    Map<Integer, Posicoes> posicoes = new HashMap();
+    Map<Integer, Clubes> clubes = new HashMap();
+
 
 
     @Override
@@ -107,8 +112,8 @@ public class ParciaisActivity extends AppCompatActivity {
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                //.baseUrl("https://jsonkeeper.com")
-                .baseUrl(CONSTANTS.BASE_URL)
+                .baseUrl("https://jsonkeeper.com")
+                //.baseUrl(CONSTANTS.BASE_URL)
                 .build();
         APIInterface requestInterface = retrofit.create(APIInterface.class);
         Call<Parciais> call = requestInterface.getAtletas();
@@ -120,7 +125,11 @@ public class ParciaisActivity extends AppCompatActivity {
 
                     loadProgress.setVisibility(View.GONE);
 
-                    try {
+                    posicoes = response.body().getPosicoes();
+                    clubes = response.body().getClubes();
+
+
+                try {
                         // edited here ,add toJson
                         String jsonResponse = new Gson().toJson(response.body());
                         System.out.println(response.code());
@@ -212,7 +221,7 @@ public class ParciaisActivity extends AppCompatActivity {
                                 });
 
 
-                                adapter = new ParciaisRecyclerAdapter(getApplicationContext(), list);
+                                adapter = new ParciaisRecyclerAdapter(getApplicationContext(), list, posicoes, clubes);
 
                                 rv_parciais.setAdapter(adapter);
 

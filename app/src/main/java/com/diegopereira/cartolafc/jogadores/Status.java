@@ -1,18 +1,15 @@
-package com.diegopereira.cartolafc.parciais;
+package com.diegopereira.cartolafc.jogadores;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Posicoes {
+public class Status {
     @SerializedName("id")
     @Expose
     private String id;
     @SerializedName("nome")
     @Expose
     private String nome;
-    @SerializedName("abreviacao")
-    @Expose
-    private String abreviacao;
 
     public String getId() {
         return id;
@@ -30,11 +27,4 @@ public class Posicoes {
         this.nome = nome;
     }
 
-    public String getAbreviacao() {
-        return abreviacao;
-    }
-
-    public void setAbreviacao( String abreviacao ) {
-        this.abreviacao = abreviacao;
-    }
 }

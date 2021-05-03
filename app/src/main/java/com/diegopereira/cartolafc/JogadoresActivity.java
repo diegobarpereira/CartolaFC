@@ -13,14 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.diegopereira.cartolafc.jogadores.APIInterface;
 import com.diegopereira.cartolafc.jogadores.ApiClient;
 import com.diegopereira.cartolafc.jogadores.Atleta;
+import com.diegopereira.cartolafc.jogadores.Clubes;
 import com.diegopereira.cartolafc.jogadores.Jogador;
 import com.diegopereira.cartolafc.jogadores.JogadoresRecyclerAdapter;
+import com.diegopereira.cartolafc.jogadores.Posicoes;
+import com.diegopereira.cartolafc.jogadores.Status;
 import com.diegopereira.cartolafc.parciais.Atletas;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,6 +35,9 @@ public class JogadoresActivity extends AppCompatActivity {
 
     RecyclerView rv_jogadores;
     List<Atleta> list = new ArrayList<>();
+    Map<Integer, Clubes> map = new HashMap();
+    Map<Integer, Posicoes> posicoes = new HashMap();
+    Map<Integer, Status> status = new HashMap();
     JogadoresRecyclerAdapter adapter;
     LinearLayoutManager linearLayoutManager;
 
@@ -59,17 +67,21 @@ public class JogadoresActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Jogador> call, Response<Jogador> response) {
                 list = response.body().getAtletas();
+                map = response.body().getClubes();
+                posicoes = response.body().getPosicoes();
+                status = response.body().getStatus();
+
                 Collections.sort(list, new Comparator<Atleta>() {
                     @Override
                     public int compare(Atleta o1, Atleta o2) {
                         return o2.getMediaNum().compareTo(o1.getMediaNum());
                     }
                 });
-                adapter = new JogadoresRecyclerAdapter(getApplicationContext(), list);
+                adapter = new JogadoresRecyclerAdapter(getApplicationContext(), list, map, posicoes, status);
                 rv_jogadores.setAdapter(adapter);
 
                 adapter.notifyDataSetChanged();
-                Log.d("TAG", String.valueOf(response.body().getAtletas()));
+                //Log.d("TAG", String.valueOf(response.body().getPosicoes()));
 
             }
 

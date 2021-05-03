@@ -14,8 +14,8 @@ import retrofit2.http.Headers;
 public interface APIInterface {
    // @Headers("Content-Type: application/json")
 
-    //@GET("/b/PSVE")
-    @GET("/atletas/pontuados/")
+    @GET("/b/WQV8")
+    //@GET("/atletas/pontuados/")
     Call<Parciais> getAtletas();
 
 }

@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Map;
 
 public class Example {
 
@@ -13,6 +14,9 @@ public class Example {
     @SerializedName("rodada")
     @Expose
     private Integer rodada;
+    @SerializedName("clubes")
+    @Expose
+    private Map<Integer, Clubes> clubes;
 
 
     public List<Partida> getPartidas() {
@@ -41,6 +45,11 @@ public class Example {
         return this;
     }
 
+    public Map<Integer, Clubes> getClubes() {
+        return clubes;
+    }
 
-
+    public void setClubes( Map<Integer, Clubes> clubes ) {
+        this.clubes = clubes;
+    }
 }

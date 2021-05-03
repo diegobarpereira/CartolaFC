@@ -1,6 +1,5 @@
 package com.diegopereira.cartolafc.parciais;
 
-import com.diegopereira.cartolafc.liga.Posicoes;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,7 +15,10 @@ public class Parciais {
     private Map<String, Atletas> atletas;
     @SerializedName("posicoes")
     @Expose
-    private Posicoes posicoes;
+    private Map<Integer, Posicoes> posicoes;
+    @SerializedName("clubes")
+    @Expose
+    private Map<Integer, Clubes> clubes;
 
     public Integer getRodada() {
         return rodada;
@@ -34,11 +36,19 @@ public class Parciais {
         this.atletas = atletas;
     }
 
-    public Posicoes getPosicoes() {
+    public Map<Integer, Posicoes> getPosicoes() {
         return posicoes;
     }
 
-    public void setPosicoes(Posicoes posicoes) {
+    public void setPosicoes( Map<Integer, Posicoes> posicoes ) {
         this.posicoes = posicoes;
+    }
+
+    public Map<Integer, com.diegopereira.cartolafc.parciais.Clubes> getClubes() {
+        return clubes;
+    }
+
+    public void setClubes( Map<Integer, com.diegopereira.cartolafc.parciais.Clubes> clubes ) {
+        this.clubes = clubes;
     }
 }
