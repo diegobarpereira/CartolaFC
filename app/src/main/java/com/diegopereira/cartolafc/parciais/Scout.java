@@ -1,8 +1,5 @@
 package com.diegopereira.cartolafc.parciais;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -28,9 +25,9 @@ public class Scout{
 	@Expose
 	private String cA;
 
-	@SerializedName("DD")
+	@SerializedName("DE")
 	@Expose
-	private String dD;
+	private String dE;
 
 	@SerializedName("GS")
 	@Expose
@@ -76,11 +73,19 @@ public class Scout{
 	@Expose
 	private String dP;
 
+	@SerializedName("PS")
+	@Expose
+	private String pS;
+
+	@SerializedName("PC")
+	@Expose
+	private String pC;
+
 	public Scout() {
 		fS = null;
 	}
 
-	public void setFS(String fS){
+	public void setFS( String fS){
 		this.fS = fS;
 	}
 
@@ -88,7 +93,7 @@ public class Scout{
 		return fS;
 	}
 
-	public void setPI(String pI){
+	public void setPI( String pI){
 		this.pI = pI;
 	}
 
@@ -96,7 +101,7 @@ public class Scout{
 		return pI;
 	}
 
-	public void setFC(String fC){
+	public void setFC( String fC){
 		this.fC = fC;
 	}
 
@@ -104,7 +109,7 @@ public class Scout{
 		return fC;
 	}
 
-	public void setDS(String dS){
+	public void setDS( String dS){
 		this.dS = dS;
 	}
 
@@ -112,7 +117,7 @@ public class Scout{
 		return dS;
 	}
 
-	public void setCA(String cA){
+	public void setCA( String cA){
 		this.cA = cA;
 	}
 
@@ -120,15 +125,7 @@ public class Scout{
 		return cA;
 	}
 
-	public void setDD(String dD){
-		this.dD = dD;
-	}
-
-	public String getDD(){
-		return dD;
-	}
-
-	public void setGS(String gS){
+	public void setGS( String gS){
 		this.gS = gS;
 	}
 
@@ -136,7 +133,7 @@ public class Scout{
 		return gS;
 	}
 
-	public void setFF(String fF){
+	public void setFF( String fF){
 		this.fF = fF;
 	}
 
@@ -144,7 +141,7 @@ public class Scout{
 		return fF;
 	}
 
-	public void setI(String I){
+	public void setI( String I){
 		this.I = I;
 	}
 
@@ -152,7 +149,7 @@ public class Scout{
 		return I;
 	}
 
-	public void setFD(String fD){
+	public void setFD( String fD){
 		this.fD = fD;
 	}
 
@@ -160,7 +157,7 @@ public class Scout{
 		return fD;
 	}
 
-	public void setA(String A){
+	public void setA( String A){
 		this.A = A;
 	}
 
@@ -168,7 +165,7 @@ public class Scout{
 		return A;
 	}
 
-	public void setFT(String fT){
+	public void setFT( String fT){
 		this.fT = fT;
 	}
 
@@ -176,7 +173,7 @@ public class Scout{
 		return fT;
 	}
 
-	public void setSG(String sG){
+	public void setSG( String sG){
 		this.sG = sG;
 	}
 
@@ -184,7 +181,7 @@ public class Scout{
 		return sG;
 	}
 
-	public void setCV(String cV){
+	public void setCV( String cV){
 		this.cV = cV;
 	}
 
@@ -192,7 +189,7 @@ public class Scout{
 		return cV;
 	}
 
-	public void setG(String G){
+	public void setG( String G){
 		this.G = G;
 	}
 
@@ -200,7 +197,7 @@ public class Scout{
 		return G;
 	}
 
-	public void setPP(String pP){
+	public void setPP( String pP){
 		this.pP = pP;
 	}
 
@@ -208,7 +205,7 @@ public class Scout{
 		return pP;
 	}
 
-	public void setDP(String dP){
+	public void setDP( String dP){
 		this.dP = dP;
 	}
 
@@ -216,31 +213,27 @@ public class Scout{
 		return dP;
 	}
 
+	public String getdE() {
+		return dE;
+	}
 
-	@Override
- 	public String toString(){
-		return 
+	public void setdE( String dE ) {
+		this.dE = dE;
+	}
 
-			"FS: " + fS  + " " +
-			"PI: " + pI  + " " +
-			"FC: " + fC  + " " +
-			"DS: " + dS  + " " +
-			"CA: " + cA  + " " +
-			"DD: " + dD  + " " +
-			"GS: " + gS  + " " +
-			"FF: " + fF  + " " +
-			"I: " + I  +  " " +
-			"FD: " + fD  + " " +
-			"A: " + A  +  " " +
-			"FT: " + fT  + " " +
-			"SG: " + sG  + " " +
-			"CV: " + cV  + " " +
-			"G: " + G  +  " " +
-			"PP: " + pP  + " " +
-			"DP: " + dP
-			;
-		}
+	public String getpS() {
+		return pS;
+	}
 
+	public void setpS( String pS ) {
+		this.pS = pS;
+	}
 
+	public String getpC() {
+		return pC;
+	}
 
+	public void setpC( String pC ) {
+		this.pC = pC;
+	}
 }

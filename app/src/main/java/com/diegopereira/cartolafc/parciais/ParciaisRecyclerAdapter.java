@@ -40,13 +40,9 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
     private Map<Integer, Posicoes> posicoes;
     private Map<Integer, Clubes> clubes;
 
-    private DatabaseHelper database;
-    private String posicao;
-    private String escudo;
-
-    public ParciaisRecyclerAdapter(Context context, List<Atletas> list, Map<Integer, Posicoes> posicoes, Map<Integer, Clubes> clubes) {
+    public ParciaisRecyclerAdapter(Context context, List<Atletas> atletasList, Map<Integer, Posicoes> posicoes, Map<Integer, Clubes> clubes) {
         this.context = context;
-        this.list = list;
+        this.list = atletasList;
         this.posicoes = posicoes;
         this.clubes = clubes;
     }
@@ -58,43 +54,47 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
         return new ViewHolder(v);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
 
-        database = new DatabaseHelper(context);
-
-        holder.tv_playerparciais.setText(list.get(position).getApelido());
-
-        database.insert(list.get(position).getRodada(), list.get(position).getApelido(), list.get(position).getPontuacao(), list.get(position).getId(), list.get(position).getScout());
-
-        DecimalFormat formatter = new DecimalFormat("##0.00", new DecimalFormatSymbols(Locale.US));
-        String get_pontos = formatter.format(list.get(position).getPontuacao());
-
-        holder.tv_pontosparciais.setText(String.valueOf(get_pontos));
-
-        holder.tv_scouts.setText(String.valueOf(list.get(position).getScout()).replace("{", "").replace(",", "").replace("}", "").replace("=", ": "));
-
+        String posicao = null;
         for(Map.Entry<Integer, Posicoes> entry:posicoes.entrySet()) {
-            //System.out.println(entry.getKey() + " / " + entry.getValue().getNome());
             if ((String.valueOf(list.get(position).getPosicaoId())).equals(entry.getValue().getId())) {
                 posicao = entry.getValue().getNome();
             }
         }
-        holder.tv_posicaoparciais.setText(posicao);
 
-        for(Map.Entry<Integer, com.diegopereira.cartolafc.parciais.Clubes> entry:clubes.entrySet()) {
-            if ((list.get(position).getClubeId()).equals((entry.getValue().getId()))) {
-                escudo = entry.getValue().getEscudos().get_60x60();
+        String clube = null;
+        for(Map.Entry<Integer, Clubes> entry:clubes.entrySet()) {
+            if ((list.get(position).getClubeId()).equals(entry.getValue().getId())) {
+                clube = entry.getValue().getEscudos().get_60x60();
             }
         }
 
-        Glide
-                .with(context)
-                .load(escudo)
+        List<String> lista = new ArrayList<>();
+        Map<String,Integer> scmap = list.get(position).getScout();
+        if(scmap != null) {
+            for (Map.Entry<String, Integer> entry : scmap.entrySet()) {
+                if (entry.getKey() != null) {
+                    lista.add(entry.getValue() + entry.getKey());
+                }
+            }
+        }
+
+        holder.tv_posicaoparciais.setText(posicao);
+        holder.tv_playerparciais.setText(list.get(position).getApelido());
+        holder.tv_pontosparciais.setText(String.valueOf(list.get(position).getPontuacao()));
+
+        Glide.with(context)
+                .load(clube)
                 .into(holder.img_clube);
 
+        if (lista.isEmpty()) {
+            holder.tv_scouts.setText("");
+        } else {
+            holder.tv_scouts.setText(lista.toString());
+        }
     }
 
     @Override
@@ -103,11 +103,11 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private AppCompatImageView img_clube, img_bola, img_chut;
-        private AppCompatTextView tv_playerparciais, tv_pontosparciais, tv_posicaoparciais, tv_scouts, tv_status, tv_media, tv_ultima;
+        private AppCompatImageView img_clube;
+        private AppCompatTextView tv_playerparciais, tv_pontosparciais, tv_posicaoparciais, tv_scouts;
         private RelativeLayout rl;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder( View itemView) {
             super(itemView);
 
             tv_playerparciais = (AppCompatTextView) itemView.findViewById(R.id.tv_playerparciais);
@@ -119,4 +119,5 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
 
         }
     }
+
 }

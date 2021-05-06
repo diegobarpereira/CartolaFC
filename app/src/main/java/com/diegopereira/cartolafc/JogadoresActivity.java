@@ -18,7 +18,6 @@ import com.diegopereira.cartolafc.jogadores.Jogador;
 import com.diegopereira.cartolafc.jogadores.JogadoresRecyclerAdapter;
 import com.diegopereira.cartolafc.jogadores.Posicoes;
 import com.diegopereira.cartolafc.jogadores.Status;
-import com.diegopereira.cartolafc.parciais.Atletas;
 
 import java.util.ArrayList;
 import java.util.Collections;

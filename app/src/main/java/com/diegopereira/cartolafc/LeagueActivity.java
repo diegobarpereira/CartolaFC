@@ -1,10 +1,8 @@
 package com.diegopereira.cartolafc;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,24 +16,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.diegopereira.cartolafc.league.APIInterface;
-import com.diegopereira.cartolafc.league.DataTransfer;
 import com.diegopereira.cartolafc.league.DatabaseHelper;
 import com.diegopereira.cartolafc.league.League;
-import com.diegopereira.cartolafc.league.MyHeaderViewHolder;
 import com.diegopereira.cartolafc.league.MyParcialSection;
 import com.diegopereira.cartolafc.league.MySection;
 import com.diegopereira.cartolafc.league.Players;
-import com.diegopereira.cartolafc.league.RecyclerViewAdapter;
 import com.diegopereira.cartolafc.league.RequestInterface;
 import com.diegopereira.cartolafc.league.ServiceGenerator;
 import com.diegopereira.cartolafc.league.TimePontos;
 import com.diegopereira.cartolafc.league.Times;
-import com.diegopereira.cartolafc.liga.Time;
 import com.diegopereira.cartolafc.parciais.Parciais;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,9 +56,6 @@ import static com.diegopereira.cartolafc.ligaauth.MySection.NAME_SHARED_PREF;
 
 import static com.diegopereira.cartolafc.WebViewActivity.SHARED_PREF_NAME;
 import static com.diegopereira.cartolafc.WebViewActivity.SHARED_TOKEN;
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-import static java.lang.Boolean.getBoolean;
 
 
 public class LeagueActivity extends AppCompatActivity {

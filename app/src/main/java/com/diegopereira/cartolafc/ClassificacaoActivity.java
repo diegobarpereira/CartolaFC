@@ -2,11 +2,7 @@ package com.diegopereira.cartolafc;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,37 +10,23 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.dgreenhalgh.android.simpleitemdecoration.grid.GridDividerItemDecoration;
-import com.diegopereira.cartolafc.classificacao.Classificacao;
 import com.diegopereira.cartolafc.classificacao.ClassificacaoRecyclerAdapter;
 import com.diegopereira.cartolafc.classificacao.Login;
 import com.diegopereira.cartolafc.classificacao.Tabela;
-import com.diegopereira.cartolafc.classificacao.Time;
 import com.diegopereira.cartolafc.classificacao.User;
 import com.diegopereira.cartolafc.classificacao.UserClient;
-import com.diegopereira.cartolafc.jogadores.Atleta;
-import com.diegopereira.cartolafc.jogadores.JogadoresRecyclerAdapter;
-import com.diegopereira.cartolafc.parciais.Atletas;
-import com.diegopereira.cartolafc.parciais.ParciaisRecyclerAdapter;
-import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -53,9 +35,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.diegopereira.cartolafc.MainActivity.MAIN_SHARED_PREF;
-import static com.diegopereira.cartolafc.MainActivity.SHAREDMAIN_PREF_NAME;
 
 public class ClassificacaoActivity extends AppCompatActivity {
 

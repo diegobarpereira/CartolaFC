@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,26 +15,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.diegopereira.cartolafc.favoritos.APIInterface;
 import com.diegopereira.cartolafc.favoritos.ApiClient;
-import com.diegopereira.cartolafc.favoritos.FavRecyclerAdapter;
 import com.diegopereira.cartolafc.favoritos.MyParcialSection;
 import com.diegopereira.cartolafc.favoritos.MySection;
 import com.diegopereira.cartolafc.favoritos.Players;
-import com.diegopereira.cartolafc.favoritos.RequestInterface;
 import com.diegopereira.cartolafc.favoritos.TimePontos;
 import com.diegopereira.cartolafc.groups.DatabaseHelper;
-import com.diegopereira.cartolafc.groups.GroupRecyclerAdapter;
 import com.diegopereira.cartolafc.groups.Input;
-import com.diegopereira.cartolafc.league.ServiceGenerator;
 import com.diegopereira.cartolafc.parciais.Parciais;
-import com.diegopereira.cartolafc.teste.RecyclerViewAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

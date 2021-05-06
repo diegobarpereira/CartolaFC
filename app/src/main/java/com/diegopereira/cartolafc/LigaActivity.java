@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +23,6 @@ import com.diegopereira.cartolafc.liga.Atleta;
 import com.diegopereira.cartolafc.liga.LigaRecyclerAdapter;
 import com.diegopereira.cartolafc.liga.LigaRodadaAdapter;
 import com.diegopereira.cartolafc.liga.Players;
-import com.diegopereira.cartolafc.liga.Scout;
 import com.diegopereira.cartolafc.liga.ServiceGenerator;
 import com.diegopereira.cartolafc.liga.Teste;
 import com.diegopereira.cartolafc.parciais.Parciais;
@@ -45,7 +43,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,8 +51,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.diegopereira.cartolafc.MainActivity.MAIN_SHARED_PREF;
 import static com.diegopereira.cartolafc.MainActivity.SHAREDMAIN_PREF_NAME;
-import static com.diegopereira.cartolafc.teste.RecyclerViewAdapter.ID_SHARED_PREF;
-import static com.diegopereira.cartolafc.teste.RecyclerViewAdapter.SHARED_PREF_ID;
 //import static com.diegopereira.cartolafc.teste.RecyclerRodadaAdapter.TOTAL_SHARED_PREF;
 //import static com.diegopereira.cartolafc.teste.RecyclerRodadaAdapter.QTY_SHARED_PREF;
 

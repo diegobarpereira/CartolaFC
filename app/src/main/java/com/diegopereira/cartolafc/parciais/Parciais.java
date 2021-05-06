@@ -3,7 +3,6 @@ package com.diegopereira.cartolafc.parciais;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Parciais {
@@ -24,7 +23,7 @@ public class Parciais {
         return rodada;
     }
 
-    public void setRodada(Integer rodada) {
+    public void setRodada( Integer rodada) {
         this.rodada = rodada;
     }
 
@@ -32,9 +31,11 @@ public class Parciais {
         return atletas;
     }
 
-    public void setAtletas(Map<String, Atletas> atletas) {
+    public void setAtletas( Map<String, Atletas> atletas) {
         this.atletas = atletas;
     }
+
+
 
     public Map<Integer, Posicoes> getPosicoes() {
         return posicoes;
@@ -44,11 +45,11 @@ public class Parciais {
         this.posicoes = posicoes;
     }
 
-    public Map<Integer, com.diegopereira.cartolafc.parciais.Clubes> getClubes() {
+    public Map<Integer, Clubes> getClubes() {
         return clubes;
     }
 
-    public void setClubes( Map<Integer, com.diegopereira.cartolafc.parciais.Clubes> clubes ) {
+    public void setClubes( Map<Integer, Clubes> clubes ) {
         this.clubes = clubes;
     }
 }

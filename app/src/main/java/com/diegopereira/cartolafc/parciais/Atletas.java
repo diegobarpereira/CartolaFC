@@ -5,10 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Map;
 
-public class Atletas{
-	@SerializedName("rodada")
-	@Expose
-	private Integer rodada;
+public class Atletas implements Comparable<Atletas> {
 	@SerializedName("id")
 	@Expose
 	private Integer id;
@@ -31,14 +28,6 @@ public class Atletas{
 	@Expose
 	private Integer clubeId;
 
-	public Integer getRodada() {
-		return rodada;
-	}
-
-	public void setRodada(Integer rodada) {
-		this.rodada = rodada;
-	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -51,7 +40,7 @@ public class Atletas{
 		return apelido;
 	}
 
-	public void setApelido(String apelido) {
+	public void setApelido( String apelido) {
 		this.apelido = apelido;
 	}
 
@@ -59,7 +48,7 @@ public class Atletas{
 		return pontuacao;
 	}
 
-	public void setPontuacao(Double pontuacao) {
+	public void setPontuacao( Double pontuacao) {
 		this.pontuacao = pontuacao;
 	}
 
@@ -67,7 +56,7 @@ public class Atletas{
 		return scout;
 	}
 
-	public void setScout(Map<String, Integer> scout) {
+	public void setScout( Map<String, Integer> scout ) {
 		this.scout = scout;
 	}
 
@@ -75,7 +64,7 @@ public class Atletas{
 		return foto;
 	}
 
-	public void setFoto(String foto) {
+	public void setFoto( String foto) {
 		this.foto = foto;
 	}
 
@@ -83,7 +72,7 @@ public class Atletas{
 		return posicaoId;
 	}
 
-	public void setPosicaoId(Integer posicaoId) {
+	public void setPosicaoId( Integer posicaoId) {
 		this.posicaoId = posicaoId;
 	}
 
@@ -91,9 +80,13 @@ public class Atletas{
 		return clubeId;
 	}
 
-	public void setClubeId(Integer clubeId) {
+	public void setClubeId( Integer clubeId) {
 		this.clubeId = clubeId;
 	}
 
 
+	@Override
+	public int compareTo( Atletas atletas ) {
+		return (int) (this.pontuacao - atletas.getPontuacao());
+	}
 }
