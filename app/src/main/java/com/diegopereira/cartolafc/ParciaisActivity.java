@@ -35,6 +35,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,13 +46,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ParciaisActivity extends AppCompatActivity {
 
     private ProgressBar loadProgress;
-
     RecyclerView rv_parciais;
-
     ParciaisRecyclerAdapter adapter;
     LinearLayoutManager linearLayoutManager;
-
-    Map<String, Atletas> atletas = new HashMap<>();
+    Set<Map.Entry<String,Atletas>> set;
+    List<Map.Entry<String, Atletas>> list;
+    Map<String, Atletas> atletas;
     Map<Integer, Posicoes> posicoes = new HashMap();
     Map<Integer, Clubes> clubes = new HashMap();
 
@@ -108,19 +108,23 @@ public class ParciaisActivity extends AppCompatActivity {
                 loadProgress.setVisibility(View.GONE);
 
                 if (response.code() == 200) {
-                    atletas = response.body().getAtletas();
-                    List<Atletas> atletasList = new ArrayList<>(atletas.values());
 
-                    Collections.sort(atletasList, new Comparator<Atletas>() {
+                    atletas = response.body().getAtletas();
+                    posicoes = response.body().getPosicoes();
+                    clubes = response.body().getClubes();
+
+                    set = atletas.entrySet();
+                    list = new ArrayList<Map.Entry<String, Atletas>>(set);
+
+                    Collections.sort(list, new Comparator<Map.Entry<String, Atletas>>() {
                         @Override
-                        public int compare( Atletas atletas, Atletas t1 ) {
-                            return t1.getPontuacao().compareTo(atletas.getPontuacao());
+                        public int compare( Map.Entry<String, Atletas> t1, Map.Entry<String, Atletas> t2 ) {
+                            return t2.getValue().getPontuacao().compareTo(t1.getValue().getPontuacao());
                         }
                     });
 
-                    posicoes = response.body().getPosicoes();
-                    clubes = response.body().getClubes();
-                    adapter = new ParciaisRecyclerAdapter(ParciaisActivity.this, atletasList, posicoes, clubes);
+                    adapter = new ParciaisRecyclerAdapter(getApplicationContext(), list, posicoes, clubes);
+
                     rv_parciais.setAdapter(adapter);
                 }
 

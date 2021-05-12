@@ -36,8 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.diegopereira.cartolafc.LoginActivity.SHARED_PREF_NAME;
-import static com.diegopereira.cartolafc.LoginActivity.SHARED_TOKEN;
+import static com.diegopereira.cartolafc.WebViewActivity.SHARED_PREF_NAME;
+import static com.diegopereira.cartolafc.WebViewActivity.SHARED_TOKEN;
 
 public class LigaAuthActivity extends AppCompatActivity {
     SharedPreferences preferences;

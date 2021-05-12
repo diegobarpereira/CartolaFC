@@ -70,6 +70,7 @@ public class MySection extends Section {
         MyItemViewHolder itemViewHolder = (MyItemViewHolder) holder;
 
         // bind your view here
+        System.out.println(list);
 
         Double diff = 0.00;
         DecimalFormat formatter = new DecimalFormat("##0.00", new DecimalFormatSymbols(Locale.US));
@@ -77,8 +78,11 @@ public class MySection extends Section {
         for (int i = 0; i < position; i++) {
             itemViewHolder.dif.setVisibility(View.VISIBLE);
 
-            diff = list.get(position).getPontos().getCampeonato()-list.get(0).getPontos().getCampeonato();
+            if (list.get(position).getPontos().getCampeonato() == null) {
 
+            } else {
+                diff = list.get(position).getPontos().getCampeonato() - list.get(0).getPontos().getCampeonato();
+            }
         }
 
 
@@ -86,40 +90,66 @@ public class MySection extends Section {
             itemViewHolder.dif.setVisibility(View.INVISIBLE);
         }
 
-        itemViewHolder.dif.setText(String.valueOf(formatter.format(diff)));
+        if (diff == null) {
+            itemViewHolder.dif.setText("0.00");
+        } else {
+            itemViewHolder.dif.setText(String.valueOf(formatter.format(diff)));
+        }
 
         String name = list.get(position).getNome();
         itemViewHolder.name.setText(name);
 
-        //System.out.println(list.get(position).getRanking().getCampeonato());
-        Integer posicao = list.get(position).getRanking().getCampeonato();
-        String pos = String.valueOf(posicao);
-        itemViewHolder.pos.setText(pos);
+        if (list.get(position).getRanking().getCampeonato() == null) {
+            for (int i = 0; i < list.size(); i++) {
 
-        Double pontos = list.get(position).getPontos().getCampeonato();
-        String points = String.valueOf(formatter.format(pontos));
-        itemViewHolder.points.setText(points);
+                itemViewHolder.pos.setText(String.valueOf(position + 1));
+                System.out.println(String.valueOf(position));
 
-        Integer var = list.get(position).getVariacao().getCampeonato();
-        if (var > 0) {
-            String variacao = String.valueOf(var);
-            itemViewHolder.var.setText("+" + variacao);
-            itemViewHolder.var.setTextColor(Color.parseColor("#006400"));
+            }
+
+            } else {
+            Integer posicao = list.get(position).getRanking().getCampeonato();
+            String pos = String.valueOf(posicao);
+            itemViewHolder.pos.setText(pos);
         }
-        if (var < 0 ) {
-            String variacao = String.valueOf(var);
-            itemViewHolder.var.setText(variacao);
-            itemViewHolder.var.setTextColor(Color.RED);
+
+        if (list.get(position).getPontos().getCampeonato() == null) {
+            itemViewHolder.points.setText("0.00");
+        } else {
+            System.out.println(list.get(position).getPontos().getCampeonato());
+            Double pontos = list.get(position).getPontos().getCampeonato();
+            String points = String.valueOf(formatter.format(pontos));
+            itemViewHolder.points.setText(points);
         }
-        if (var == 0 ) {
-            String variacao = String.valueOf(var);
+
+        if (list.get(position).getVariacao().getCampeonato() == null) {
             itemViewHolder.var.setText("=");
-            itemViewHolder.var.setTextColor(Color.GRAY);
+        } else {
+            Integer var = list.get(position).getVariacao().getCampeonato();
+            if (var > 0) {
+                String variacao = String.valueOf(var);
+                itemViewHolder.var.setText("+" + variacao);
+                itemViewHolder.var.setTextColor(Color.parseColor("#006400"));
+            }
+            if (var < 0) {
+                String variacao = String.valueOf(var);
+                itemViewHolder.var.setText(variacao);
+                itemViewHolder.var.setTextColor(Color.RED);
+            }
+            if (var == 0) {
+                String variacao = String.valueOf(var);
+                itemViewHolder.var.setText("=");
+                itemViewHolder.var.setTextColor(Color.GRAY);
+            }
         }
 
-        Double ultima = list.get(position).getPontos().getRodada();
-        String rodada = String.valueOf(formatter.format(ultima));
-        itemViewHolder.ultima.setText(rodada);
+        if (list.get(position).getPontos().getRodada() == null) {
+            itemViewHolder.ultima.setText("0.00");
+        } else {
+            Double ultima = list.get(position).getPontos().getRodada();
+            String rodada = String.valueOf(formatter.format(ultima));
+            itemViewHolder.ultima.setText(rodada);
+        }
 
         Double cash = list.get(position).getPatrimonio();
         String dinheiro = String.valueOf(formatter.format(cash));
@@ -130,17 +160,17 @@ public class MySection extends Section {
                 .load(symbol)
                 .into(itemViewHolder.img_player);
 
-        if (isClicked || ultimaisClicked) {
-            itemViewHolder.dif.setVisibility(View.INVISIBLE);
-            itemViewHolder.var.setVisibility(View.GONE);
-
-
-        }
-        for (int k = 0; k < list.size(); k++) {
-            if (ultimaisClicked) {
-                itemViewHolder.pos.setText(String.valueOf(position + 1));
-            }
-        }
+//        if (isClicked || ultimaisClicked) {
+//            itemViewHolder.dif.setVisibility(View.INVISIBLE);
+//            itemViewHolder.var.setVisibility(View.GONE);
+//
+//
+//        }
+//        for (int k = 0; k < list.size(); k++) {
+//            if (ultimaisClicked) {
+//                itemViewHolder.pos.setText(String.valueOf(position + 1));
+//            }
+//        }
 
 
         itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -170,56 +200,56 @@ public class MySection extends Section {
         headerHolder.league_name.setText(title);
 
 
-        headerHolder.league_total.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (i == 0) {
-                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
-                    isClicked = TRUE;
+//        headerHolder.league_total.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (i == 0) {
+//                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+//                    isClicked = TRUE;
+//
+//                    LeagueActivity.sortTotalASC();
+//                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
+//
+//                    i++;
+//                }
+//                else if (i == 1) {
+//                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+//                    LeagueActivity.sortTotalDESC();
+//                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
+//
+//                    isClicked = FALSE;
+//
+//                    i = 0;
+//                }
+//
+//            }
+//        });
 
-                    LeagueActivity.sortTotalASC();
-                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
-
-                    i++;
-                }
-                else if (i == 1) {
-                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
-                    LeagueActivity.sortTotalDESC();
-                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
-
-                    isClicked = FALSE;
-
-                    i = 0;
-                }
-
-            }
-        });
-
-        headerHolder.league_ultima.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (j == 0) {
-                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
-                    ultimaisClicked = TRUE;
-
-                    LeagueActivity.sortUltimaASC();
-                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
-
-
-                    j++;
-                }
-                else if (j == 1) {
-                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
-                    LeagueActivity.sortUltimaDESC();
-                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
-
-                    ultimaisClicked = FALSE;
-
-                    j = 0;
-                }
-
-            }
-        });
+//        headerHolder.league_ultima.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (j == 0) {
+//                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+//                    ultimaisClicked = TRUE;
+//
+//                    LeagueActivity.sortUltimaASC();
+//                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
+//
+//
+//                    j++;
+//                }
+//                else if (j == 1) {
+//                    //Toast.makeText(context, String.valueOf(i), Toast.LENGTH_SHORT).show();
+//                    LeagueActivity.sortUltimaDESC();
+//                    LeagueActivity.sectionAdapter.notifyDataSetChanged();
+//
+//                    ultimaisClicked = FALSE;
+//
+//                    j = 0;
+//                }
+//
+//            }
+//        });
 
     }
 

@@ -176,10 +176,10 @@ public class LeagueActivity extends AppCompatActivity {
             public void onResponse(Call<League> call, Response<League> response) {
                 loadProgress.setVisibility(View.GONE);
 
-                //System.out.println(response.body().getTimes());
+                System.out.println(response.body().getTimes());
                 list = response.body().getTimes();
 
-                sortTotalDESC();
+                //sortTotalDESC();
 
 
                 com.diegopereira.cartolafc.league.MySection section1 = new MySection(getApplicationContext() ,  nome, list);
@@ -347,54 +347,54 @@ public class LeagueActivity extends AppCompatActivity {
 
 
 
-        public static void sortTotalDESC() {
-
-                    Collections.sort(list, new Comparator<Times>() {
-                        @Override
-                        public int compare(Times o1, Times o2) {
-                            return (o1.getRanking().getCampeonato()).compareTo(o2.getRanking().getCampeonato());
-                        }
-                    });
-            sectionAdapter.notifyDataSetChanged();
-
-        }
-
-
-    public static void sortTotalASC() {
-
-        Collections.sort(list, new Comparator<Times>() {
-            @Override
-            public int compare(Times o1, Times o2) {
-                return (o2.getRanking().getCampeonato()).compareTo(o1.getRanking().getCampeonato());
-            }
-        });
-        sectionAdapter.notifyDataSetChanged();
-
-    }
-
-    public static void sortUltimaASC() {
-
-        Collections.sort(list, new Comparator<Times>() {
-            @Override
-            public int compare(Times o1, Times o2) {
-                return (o2.getPontos().getRodada()).compareTo(o1.getPontos().getRodada());
-            }
-        });
-        sectionAdapter.notifyDataSetChanged();
-
-    }
-
-    public static void sortUltimaDESC() {
-
-        Collections.sort(list, new Comparator<Times>() {
-            @Override
-            public int compare(Times o1, Times o2) {
-                return (o1.getPontos().getRodada()).compareTo(o2.getPontos().getRodada());
-            }
-        });
-        sectionAdapter.notifyDataSetChanged();
-
-    }
+//        public static void sortTotalDESC() {
+//
+//                    Collections.sort(list, new Comparator<Times>() {
+//                        @Override
+//                        public int compare(Times o1, Times o2) {
+//                            return (o1.getRanking().getCampeonato()).compareTo(o2.getRanking().getCampeonato());
+//                        }
+//                    });
+//            sectionAdapter.notifyDataSetChanged();
+//
+//        }
+//
+//
+//    public static void sortTotalASC() {
+//
+//        Collections.sort(list, new Comparator<Times>() {
+//            @Override
+//            public int compare(Times o1, Times o2) {
+//                return (o2.getRanking().getCampeonato()).compareTo(o1.getRanking().getCampeonato());
+//            }
+//        });
+//        sectionAdapter.notifyDataSetChanged();
+//
+//    }
+//
+//    public static void sortUltimaASC() {
+//
+//        Collections.sort(list, new Comparator<Times>() {
+//            @Override
+//            public int compare(Times o1, Times o2) {
+//                return (o2.getPontos().getRodada()).compareTo(o1.getPontos().getRodada());
+//            }
+//        });
+//        sectionAdapter.notifyDataSetChanged();
+//
+//    }
+//
+//    public static void sortUltimaDESC() {
+//
+//        Collections.sort(list, new Comparator<Times>() {
+//            @Override
+//            public int compare(Times o1, Times o2) {
+//                return (o1.getPontos().getRodada()).compareTo(o2.getPontos().getRodada());
+//            }
+//        });
+//        sectionAdapter.notifyDataSetChanged();
+//
+//    }
 
 
 

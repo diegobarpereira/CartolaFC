@@ -36,13 +36,13 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecyclerAdapter.ViewHolder> {
     private Context context;
-    private List<Atletas> list;
+    private List<Map.Entry<String, Atletas>> list;
     private Map<Integer, Posicoes> posicoes;
     private Map<Integer, Clubes> clubes;
 
-    public ParciaisRecyclerAdapter(Context context, List<Atletas> atletasList, Map<Integer, Posicoes> posicoes, Map<Integer, Clubes> clubes) {
+    public ParciaisRecyclerAdapter( Context context, List<Map.Entry<String, Atletas>> list, Map<Integer, Posicoes> posicoes, Map<Integer, Clubes> clubes) {
         this.context = context;
-        this.list = atletasList;
+        this.list = list;
         this.posicoes = posicoes;
         this.clubes = clubes;
     }
@@ -60,41 +60,46 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
 
         String posicao = null;
         for(Map.Entry<Integer, Posicoes> entry:posicoes.entrySet()) {
-            if ((String.valueOf(list.get(position).getPosicaoId())).equals(entry.getValue().getId())) {
+            if ((String.valueOf(list.get(position).getValue().getPosicaoId())).equals(entry.getValue().getId())) {
                 posicao = entry.getValue().getNome();
             }
         }
 
-        String clube = null;
+        String clubeEscudo = null;
         for(Map.Entry<Integer, Clubes> entry:clubes.entrySet()) {
-            if ((list.get(position).getClubeId()).equals(entry.getValue().getId())) {
-                clube = entry.getValue().getEscudos().get_60x60();
+            if ((list.get(position).getValue().getClubeId()).equals(entry.getValue().getId())) {
+                clubeEscudo = entry.getValue().getEscudos().get_60x60();
             }
         }
 
-        List<String> lista = new ArrayList<>();
-        Map<String,Integer> scmap = list.get(position).getScout();
+        List<String> listaScout = new ArrayList<>();
+        Map<String,Integer> scmap = list.get(position).getValue().getScout();
         if(scmap != null) {
             for (Map.Entry<String, Integer> entry : scmap.entrySet()) {
                 if (entry.getKey() != null) {
-                    lista.add(entry.getValue() + entry.getKey());
+                    listaScout.add(entry.getValue() + entry.getKey());
                 }
             }
         }
 
+        String id = list.get(position).getKey();
+        String apelido = list.get(position).getValue().getApelido();
+        double pontuacao = list.get(position).getValue().getPontuacao();
+
+        holder.tv_playerparciais.setText(apelido);
+        holder.tv_pontosparciais.setText(String.valueOf(pontuacao));
         holder.tv_posicaoparciais.setText(posicao);
-        holder.tv_playerparciais.setText(list.get(position).getApelido());
-        holder.tv_pontosparciais.setText(String.valueOf(list.get(position).getPontuacao()));
-
-        Glide.with(context)
-                .load(clube)
-                .into(holder.img_clube);
-
-        if (lista.isEmpty()) {
+        if (listaScout.isEmpty()) {
             holder.tv_scouts.setText("");
         } else {
-            holder.tv_scouts.setText(lista.toString());
+            holder.tv_scouts.setText(listaScout.toString());
         }
+        Glide.with(context)
+                .load(clubeEscudo)
+                .into(holder.img_clube);
+
+        System.out.println(list.get(position).getKey() + " : " + list.get(position).getValue().getApelido() + " : " + posicao + " : " + clubeEscudo + " : " + list.get(position).getValue().getPontuacao()
+                + " : " + listaScout);
     }
 
     @Override
@@ -105,7 +110,6 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
     public class ViewHolder extends RecyclerView.ViewHolder {
         private AppCompatImageView img_clube;
         private AppCompatTextView tv_playerparciais, tv_pontosparciais, tv_posicaoparciais, tv_scouts;
-        private RelativeLayout rl;
 
         public ViewHolder( View itemView) {
             super(itemView);
@@ -115,8 +119,6 @@ public class ParciaisRecyclerAdapter extends RecyclerView.Adapter<ParciaisRecycl
             tv_posicaoparciais = (AppCompatTextView) itemView.findViewById(R.id.tv_posicaoparciais);
             img_clube = (AppCompatImageView) itemView.findViewById(R.id.img_clube);
             tv_scouts = (AppCompatTextView) itemView.findViewById(R.id.tv_scouts);
-            rl = itemView.findViewById(R.id.rl);
-
         }
     }
 
