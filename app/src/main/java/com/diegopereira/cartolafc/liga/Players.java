@@ -24,6 +24,10 @@ package com.diegopereira.cartolafc.liga;
         @SerializedName("rodada_atual")
         @Expose
         private Integer rodadaAtual;
+
+        @SerializedName("mensagem")
+        @Expose
+        private String mensagem;
         @SerializedName("patrimonio")
         @Expose
         private Double patrimonio;
@@ -89,6 +93,14 @@ package com.diegopereira.cartolafc.liga;
 
         public void setRodadaAtual(Integer rodadaAtual) {
             this.rodadaAtual = rodadaAtual;
+        }
+
+        public String getMensagem() {
+            return mensagem;
+        }
+
+        public void setMensagem(String mensagem) {
+            this.mensagem = mensagem;
         }
 
         public Double getPatrimonio() {

@@ -62,6 +62,7 @@ public class MySection extends StatelessSection {
         MyItemViewHolder itemViewHolder = (MyItemViewHolder) holder;
 
         // bind your view here
+        System.out.println(list.get(position).getTotal_times_liga().toString());
 
             if (list.get(position).getTime_dono_id() != null) {
                 Ligas ligas = new Ligas();

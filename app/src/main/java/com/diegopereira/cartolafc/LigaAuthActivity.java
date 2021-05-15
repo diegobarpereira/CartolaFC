@@ -23,6 +23,8 @@ import com.diegopereira.cartolafc.ligaauth.Ligas;
 import com.diegopereira.cartolafc.ligaauth.MySection;
 import com.diegopereira.cartolafc.login.LigaGenerator;
 import com.diegopereira.cartolafc.login.RequestInterface;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -148,7 +150,8 @@ public class LigaAuthActivity extends AppCompatActivity {
                             System.out.println("Get Ligas: " + response.body().getLigas().toString());
                             ligas = response.body().getLigas();
 
-
+                            String gson = new Gson().toJson(response.body().getLigas());
+                            System.out.println("gson: " + gson);
 
                             if (!containsName(ligas, "null")) {
 

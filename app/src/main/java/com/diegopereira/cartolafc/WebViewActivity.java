@@ -113,6 +113,7 @@ public class WebViewActivity extends AppCompatActivity {
                 }
                 if (message.contains("Logado!!!")) {
                     webView.loadUrl("https://cartolafc.globo.com/#!/logout");
+                    
                     //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
                 return super.onConsoleMessage(consoleMessage);

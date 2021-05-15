@@ -2,12 +2,17 @@ package com.diegopereira.cartolafc;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -157,7 +162,6 @@ public class LigaActivity extends AppCompatActivity {
 
     public void loadLiga() {
 
-
         APIInterface status = ServiceGenerator.getRetrofit().create(APIInterface.class);
         //Call<Players> call = status.getPlayers();
         Call<Players> call = status.getTime(String.valueOf(time_id));
@@ -167,28 +171,6 @@ public class LigaActivity extends AppCompatActivity {
             @Override
             public void onResponse( Call<Players> call, Response<Players> response ) {
                 if (response.isSuccessful()) {
-                    list = response.body().getAtletas();
-
-                    idgol = response.body().getPosicoes().get1().getId();
-                    idlat = response.body().getPosicoes().get2().getId();
-                    idzag = response.body().getPosicoes().get3().getId();
-                    idmei = response.body().getPosicoes().get4().getId();
-                    idata = response.body().getPosicoes().get5().getId();
-                    idtec = response.body().getPosicoes().get6().getId();
-
-                    //System.out.println("ID1: " + idgol + " ID2: " + idlat + " ID3: " + idzag + " ID4: " + idmei +
-                    //                   " ID5: " + idata + " ID6: " + idtec);
-
-                    Collections.sort(list, new Comparator<Atleta>() {
-                        @Override
-                        public int compare( Atleta o1, Atleta o2 ) {
-                            return o1.getPosicaoId().compareTo(o2.getPosicaoId());
-                        }
-                    });
-
-                    capitao = response.body().getCapitaoId();
-                    atleta_id = response.body().getTime().getTimeId();
-
                     timename = response.body().getTime().getNome();
                     tv_timename.setText(timename);
 
@@ -198,52 +180,94 @@ public class LigaActivity extends AppCompatActivity {
                             .load(image)
                             .into(img_time);
 
-                    //
-                    mapliga = new HashMap<>();
-                    for (int i = 0; i < 12; i++) {
-                        jogador_id = response.body().getAtletas().get(i).getAtletaId();
 
-                        Teste newtemp = new Teste();
-                        newtemp.setId(String.valueOf(jogador_id));
-                        //newtemp.setPontuacao(pontos);
+                    System.out.println("GETAtl: " + stat + ":" + response.body().getRodadaAtual());
+                    int rodadaatual = response.body().getRodadaAtual();
+                    if((stat.equals("1")) && (String.valueOf(rodadaatual).equals("1"))) {
+                   // if (mensagem.contains("Este time ainda não foi escalado na temporada.") || (response.body().getAtletas().isEmpty())) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Este time ainda não foi \n escalado na temporada.", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);
+                        LinearLayout toastLL = (LinearLayout) toast.getView();
+                        toastLL.setBackgroundColor(Color.WHITE);
+                        TextView toastTV = (TextView) toastLL.getChildAt(0);
+                        toastTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        toastTV.setTextColor(Color.BLACK);
+                        toastTV.setTextSize(22);
+                        toast.show();
+                    } else {
+                        System.out.println("Rodada Atual: " + response.body().getRodadaAtual());
+                        System.out.println("Mensagem: " + response.body().getMensagem());
+                        list = response.body().getAtletas();
 
-                        tmpList.add(newtemp);
+                        idgol = response.body().getPosicoes().get1().getId();
+                        idlat = response.body().getPosicoes().get2().getId();
+                        idzag = response.body().getPosicoes().get3().getId();
+                        idmei = response.body().getPosicoes().get4().getId();
+                        idata = response.body().getPosicoes().get5().getId();
+                        idtec = response.body().getPosicoes().get6().getId();
 
-                        mapliga.put(String.valueOf(jogador_id), 0.0);
-                        //System.out.println("JOGADOR_ID:" + jogador_id);
-                    }
-                    SharedPreferences sharedPref = getSharedPreferences(SHAREDMAIN_PREF_NAME, MODE_PRIVATE);
+                        //System.out.println("ID1: " + idgol + " ID2: " + idlat + " ID3: " + idzag + " ID4: " + idmei +
+                        //                   " ID5: " + idata + " ID6: " + idtec);
 
-                    stat = sharedPref.getString(MAIN_SHARED_PREF, "N/A");
+                        Collections.sort(list, new Comparator<Atleta>() {
+                            @Override
+                            public int compare(Atleta o1, Atleta o2) {
+                                return o1.getPosicaoId().compareTo(o2.getPosicaoId());
+                            }
+                        });
 
-
-                    if (stat.equals("1")) {
-                        timepts = response.body().getPontos();
-                        tv_timepts.setText(String.format(Locale.US, "%.2f", timepts));
-                        timetot = response.body().getPontosCampeonato();
-                        tv_timetot.setText(String.format(Locale.US, "%.2f", timetot));
-                        tv_qty.setVisibility(View.INVISIBLE);
-                        adapter = new LigaRecyclerAdapter(getApplicationContext(), list, capitao, idgol, idlat, idzag, idmei, idata, idtec, mapliga);
-                        adapter.notifyDataSetChanged();
-                        recyclerView.setAdapter(adapter);
+                        capitao = response.body().getCapitaoId();
+                        atleta_id = response.body().getTime().getTimeId();
 
 
-                    }
-                    if (stat.equals("2")) {
-                        loadParciais();
 
-                        vault = preferences.getString(TOTAL_SHARED_PREF, String.valueOf(0.0));
-                        qty = preferences.getString(QTY_SHARED_PREF, String.valueOf("0/0"));
+                        //
+                        mapliga = new HashMap<>();
+                        for (int i = 0; i < 12; i++) {
+                            jogador_id = response.body().getAtletas().get(i).getAtletaId();
 
-                        Double vvault = Double.valueOf(vault);
-                        Double timepts_ = (vvault);
-                        tv_timepts.setText(String.format(Locale.US, "%.2f", timepts_));
+                            Teste newtemp = new Teste();
+                            newtemp.setId(String.valueOf(jogador_id));
+                            //newtemp.setPontuacao(pontos);
 
-                        tv_qty.setText(qty);
+                            tmpList.add(newtemp);
 
-                        timetot = response.body().getPontosCampeonato();
-                        tv_timetot.setText(String.format(Locale.US, "%.2f", (timetot + timepts_)));
+                            mapliga.put(String.valueOf(jogador_id), 0.0);
+                            //System.out.println("JOGADOR_ID:" + jogador_id);
+                        }
+                        SharedPreferences sharedPref = getSharedPreferences(SHAREDMAIN_PREF_NAME, MODE_PRIVATE);
 
+                        stat = sharedPref.getString(MAIN_SHARED_PREF, "N/A");
+
+
+                        if (stat.equals("1")) {
+                            timepts = response.body().getPontos();
+                            tv_timepts.setText(String.format(Locale.US, "%.2f", timepts));
+                            timetot = response.body().getPontosCampeonato();
+                            tv_timetot.setText(String.format(Locale.US, "%.2f", timetot));
+                            tv_qty.setVisibility(View.INVISIBLE);
+                            adapter = new LigaRecyclerAdapter(getApplicationContext(), list, capitao, idgol, idlat, idzag, idmei, idata, idtec, mapliga);
+                            adapter.notifyDataSetChanged();
+                            recyclerView.setAdapter(adapter);
+
+
+                        }
+                        if (stat.equals("2")) {
+                            loadParciais();
+
+                            vault = preferences.getString(TOTAL_SHARED_PREF, String.valueOf(0.0));
+                            qty = preferences.getString(QTY_SHARED_PREF, String.valueOf("0/0"));
+
+                            Double vvault = Double.valueOf(vault);
+                            Double timepts_ = (vvault);
+                            tv_timepts.setText(String.format(Locale.US, "%.2f", timepts_));
+
+                            tv_qty.setText(qty);
+
+                            timetot = response.body().getPontosCampeonato();
+                            tv_timetot.setText(String.format(Locale.US, "%.2f", (timetot + timepts_)));
+
+                        }
                     }
                 }
 
